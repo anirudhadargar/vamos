@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<% layout('Layouts/boilerplate') %>
 <div class="d-flex justify-content-center align-items-center">
   <div class=" border rounded p-2 w-50 h-50">
 
@@ -6,31 +6,31 @@
           <div class="alert alert-danger" role="alert">Register Here</div>
       </h3>
 
-      <form method="post">
+      <form action="/register" method="POST">
           <div class="form-group m-1">
-              <label For="username"><b>Client Name</b></label>
+              <label class="form-label" for="username"><b>Client Name</b></label>
               <input class="form-control-sm form-control" id="" value="" name="username" placeholder="" type="text"/>
           </div>
 
 
           <div class="form-group m-1">
-              <label For="uniqueID"><b>Unique-ID</b></label>
+              <label class="form-label" for="uniqueID"><b>Unique-ID</b></label>
               <input class="form-control-sm form-control" id="" value="" name="uniqueID" placeholder="" type="text"/>
           </div>
 
           <div class="form-group m-1">
-              <label For="contact"><b>Contact Number</b></label>
+              <label class="form-label" for="contact"><b>Contact Number</b></label>
               <input class="form-control-sm form-control" id="" value="" name="contact" placeholder="" type="number"/>
           </div>
 
 
           <div class="form-group m-1">
-              <label For="email"><b>Email</b></label>
+              <label class="form-label" for="email"><b>Email</b></label>
               <input required class="form-control-sm form-control" id="" value="" name="email" placeholder="example@gmail.com" type="email"/>
           </div>
 
           <div class="form-group m-1">
-              <label For=""><b>Password</b></label>
+              <label class="form-label" for="password"><b>Password</b></label>
               <input class="form-control-sm form-control" id="" name="password" placeholder="*******" type="password"/>
           </div>
 
@@ -43,5 +43,3 @@
   </div>
 
 </div>
-
-<%- include('partials/header') %>
