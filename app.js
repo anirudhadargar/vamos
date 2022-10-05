@@ -12,9 +12,11 @@ const findOrCreate=require("mongoose-findorcreate");
 const LocalStratergy=require('passport-local')
 const User=require('./models/user')
 const flash=require('connect-flash')
+const equip=require('./models/equipment')
 
 
 const app=express();
+
 
 
 //Routes
