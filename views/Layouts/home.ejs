@@ -19,13 +19,19 @@
         <div  class="navbar">
             
             
-                <li class="navleft"><img id="favicon" src="./images/favicon.jpeg" alt="Italian Trulli"></li>
+                <li class="navleft"><img id="favicon" src="/assets/images/favicon.jpeg" alt="Italian Trulli"></li>
                 <ul id="nav" class="navright" >
     
                     <li ><a href="#home">Home</a></li>
                     <li id="sta" ><a href="#statistics">Statistics</a></li>
                     <li  ><a href="#rental">Rental</a></li>
                     <li ><a href="#contact">Contact</a></li>
+                    <% if(login){%>
+                        <li><a href="/logout">Logout</a></li>
+                    <%}else{%>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    <%}%>
                 </ul>
               
               
@@ -38,13 +44,13 @@
 <div class="home">
     <ul >
 
-        <li id="homeimage1"><img src="./images/image-home-3.jpeg" alt=""></li>
+        <li id="homeimage1"><img src="/assets/images/image-home-3.jpeg" alt=""></li>
 
     </ul>
     <div>
         
     </div>
-    <li id="homeimage2"><img src="./images/image-home-2.jpeg" alt=""></li>
+    <li id="homeimage2"><img src="/assets/images/image-home-2.jpeg" alt=""></li>
     <li id="hometext-1">
         Get equipments right away at minimum cost</li>
     <button id="explore"><a href="#rental">Explore</a></button>
@@ -105,23 +111,23 @@
               </button>
     </div>
     <div class="productstype">
-        <a href="./products/monitoring.html" class="one">
-            <img src="./images/rental-pg1-1.jpeg" alt="">
+        <a href="/products/monitoring.html" class="one">
+            <img src="/assets/images/rental-pg1-1.jpeg" alt="">
             <div class="text">Monitoring</div>
         </a>
             
-            <a href="./products/support.html" class="one">
-                <img src="./images/rental-pg1-2.jpeg" alt="">
+            <a href="/products/support.html" class="one">
+                <img src="/assets/images/rental-pg1-2.jpeg" alt="">
                 <div class="text">Support Surfaces</div>
             </a>
          
-            <a href="./products/oximeter.html" class="one">
-                <img src="./images/rental-pg1-3.jpeg" alt="">
+            <a href="/products/oximeter.html" class="one">
+                <img src="/assets/images/rental-pg1-3.jpeg" alt="">
              <div class="text">Oximeter</div>
             </a>
            
-      <a href="./products/ivtube.html" class="one">
-        <img src="./images/rental-pg1-4.jpeg" alt="">
+      <a href="/products/ivtube.html" class="one">
+        <img src="/assets/images/rental-pg1-4.jpeg" alt="">
         <div class="text">IV Tubing</div>
       </a>
             
@@ -141,17 +147,17 @@
             Get in Touch
         </div>
         <div class="one">
-            <img src="./images/contact-left-1.png" alt="">
+            <img src="/assets/images/contact-left-1.png" alt="">
             <div id="text">abcdzyx3456@gmail.com</div>
         </div>
         <div class="one">
-            <img src="./images/contact-left-2.png" alt="">
+            <img src="/assets/images/contact-left-2.png" alt="">
             <div id="text">8884301577</div>
         </div>
         <div id="social">
-           <a href="https://twitter.com/i/flow/login"><img src="./images/contact-left-3.png" alt=""></a> 
-           <a href="https://www.instagram.com/"><img src="./images/contact-left-4.png" alt=""></a> 
-           <a href="https://m.facebook.com/"><img src="./images/contact-left-5.png" alt=""></a> 
+           <a href="https://twitter.com/i/flow/login"><img src="/assets/images/contact-left-3.png" alt=""></a> 
+           <a href="https://www.instagram.com/"><img src="/assets/images/contact-left-4.png" alt=""></a> 
+           <a href="https://m.facebook.com/"><img src="/assets/images/contact-left-5.png" alt=""></a> 
 
             
             
@@ -166,13 +172,13 @@
             you and take you on that journey. We’ll be
             perfect for each other-you’ll see...</div>
         </div>
-    <div class="box-3"><img src="./images/contact-call-right.png" alt=""></div>
-    <div class="box-4"><img src="./images/contact-mail-right.png" alt=""></div>
-    <div class="box-5"><img src="./images/contact-at-right.png" alt=""></div>
+    <div class="box-3"><img src="/assets/images/contact-call-right.png" alt=""></div>
+    <div class="box-4"><img src="/assets/images/contact-mail-right.png" alt=""></div>
+    <div class="box-5"><img src="/assets/images/contact-at-right.png" alt=""></div>
 </div>
 <a href="./form.html">form</a>
-<a href="/subproducts/monitoring-1.html">subproducts</a>
+<!--<a href="/subproducts/monitoring-1.html">subproducts</a>-->
 <!-- contactend -->
-<script src="../../public/js/frontend.js"></script>
+<script src="/js/frontend.js"></script>
 </body>
 </html>

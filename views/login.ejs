@@ -1,29 +1,62 @@
-<% layout('Layouts/boilerplate') %>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 
-<div class="d-flex justify-content-center align-items-center">
-  <div class=" border rounded p-2 w-50 h-50">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ManiPal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="/css/login.css" rel="stylesheet" />
+    <link href="/css/bootstrap-social.css" rel="stylesheet"/>
+  </head>
 
-      <h3>
-          <div class="alert alert-danger" role="alert">Login Here</div>
-      </h3>
+  <body>
+    <!-- Navbar -->
 
-      <form action="/login" method="post">
-          <div class="form-group m-1">
-              <label for="username"><b>Client Name</b></label>
-              <input class="form-control-sm form-control" id="" value="" name="username" placeholder="" type="text"/>
-          </div>
+    <!-- Form -->
+    <div class="container forbox ">
+      <div class="p-4 m-4 ">
+        <div class="col-lg-5 mx-auto border rounded mt-20">
+          <h3>
+            <div class="alert hello" role="alert" style="background-color:#A683E3">
+              Login Here
+            </div>
+          </h3>
 
-          <div class="form-group m-1">
-              <label for="username"><b>Password</b></label>
-              <input class="form-control-sm form-control" id="" name="password" placeholder="*******" type="password"/>
-          </div>
+          <form class="bg-light" method="post" action="/login">
+            <!-- email -->
+            <div class="form-group m-1">
+              <label for=""><b>Username</b></label>
+              <input class="form-control-sm form-control" id=""
+                value=""
+                name="username"
+                placeholder="Username"
+                type="text"
+                autocomplete="off"
+              />
+            </div>
 
-          <div class="col-5">
-              <input class="btn btn-primary" type="submit" value="Submit"/>
-          </div>
+            <!-- password -->
+            <div class="form-group m-1">
+              <label for=""><b>Password</b></label>
+              <input
+                class="form-control-sm form-control"
+                id=" "
+                name="password"
+                placeholder="*******"
+                type="password"
+              />
+            </div>
+            <div class="btns" role="group" aria-label="Basic example">
+    <button type="submit" class="btn btn-primary" name="user">Login as user</button>
+    <button type="submit" class="btn btn-primary" name="donor">Login as donor</button>
+             </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-      </form>
-
-  </div>
-
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>

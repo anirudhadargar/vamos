@@ -19,7 +19,12 @@ router.post("/register",async(req,res)=>{
         req.login(UserAuth,err=>{
             if(err) return next(err);
             req.flash('success',`Hello, ${username} Nice to See You`)
-            res.redirect('/home')
+            if(req.body.hasOwnProperty("donor")){
+                res.redirect("/donor");
+            }
+            else{
+                res.redirect('/home')
+            }
         })
 
     }catch(err){
@@ -28,9 +33,25 @@ router.post("/register",async(req,res)=>{
     }
 });
 
-router.post("/login",passport.authenticate('local',{failureFlash: true,failureRedirect:'/login'}),(req,res)=>{
+router.post("/login",passport.authenticate('local',{failureFlash: true,failureRedirect:'/register'}),(req,res)=>{
     req.flash("success","welcome back!")
-    res.redirect("/home");
+    if(req.body.hasOwnProperty("donor")){
+        res.redirect("/donor");
+    }
+    else{
+        res.redirect("/home");
+    }
+})
+
+router.get("/logout",function(req,res){
+    req.logout(function(err){
+        if(err){
+            return next(err);
+        }
+        else{
+            res.redirect("/home");
+        }
+    })
 })
 
 module.exports=router;
