@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/showpagestyles.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>Vamos</title>
+  </head>
+  <body>
+    <div class="d-flex flex-column">
+        <%listOfHospitals.forEach(function(hospital){%>
+            <form class="form-control-sm" method="post" action="/order"> 
+            <div class="card-body">
+              <img src="/assets/images/im5.jpg" alt="">
+              <div class="Hospital-Name" >
+                <h3>Hospital Name</h3>  
+                <input type="text" name="hospitalName" value="<%= hospital.name %>" >
+              </div>
+              <div class="Cost" >
+                <h3>Equipment Rental Cost</h3>
+                <input type="text" name="equipmentCost" value="<%= hospital.cost %>" >
+              </div>
+              <div>
+                <h3>Hospital Location</h3>
+                <input type="text" name="hospitalLocation" value="<%= hospital.location %>" >
+                </div>
+              <div>
+                <h3>Quantity Available</h3>
+                <input type="text" name="equipmentQuantity" value="<%= hospital.quantity %>" >
+                </div>
+              <div class="exbutton">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form> 
+          <%});%>
+    </div>
+  </body>
+</html>

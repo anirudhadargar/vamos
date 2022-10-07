@@ -28,22 +28,9 @@ router.post("/register",async(req,res)=>{
     }
 });
 
-router.post("/login",function(req,res){
-    const user=new User({
-        username: req.body.username,
-        password: req.body.password
-    });
-
-    req.login(user,function(err){
-        if(err){
-            console.log(err);
-        }
-        else{
-            passport.authenticate("local")(req,res,function(){
-                res.redirect("/home");
-            });
-        }
-    });
-});
+router.post("/login",passport.authenticate('local',{failureFlash: true,failureRedirect:'/login'}),(req,res)=>{
+    req.flash("success","welcome back!")
+    res.redirect("/home");
+})
 
 module.exports=router;
