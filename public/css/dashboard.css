@@ -1,0 +1,16 @@
+
+body {
+    background-image: url('/images/h2.webp');
+    z-index: 1;
+  }
+  .container-sm{
+    z-index: -1;
+  }
+  .btn{
+    position: absolute;
+  top: 40rem;
+  left: 21rem;
+  scale: 1.5;
+    
+  
+  }

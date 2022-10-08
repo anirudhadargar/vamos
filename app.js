@@ -14,14 +14,16 @@ const User=require('./models/user')
 const flash=require('connect-flash')
 const equip=require('./models/equipment')
 const path=require("path");
+const request=require("./models/equipmentOrder");
 
 
 const app=express();
 
-
+let userSession;
 
 //Routes
-const UserRoutes=require('./routes/user')
+const UserRoutes=require('./routes/user');
+const { resourceLimits } = require("worker_threads");
 
 app.use(express.static("public"));
 app.set("view engine","ejs");
@@ -75,6 +77,7 @@ app.use((req,res,next)=>{
 app.use('/',UserRoutes)
 
 app.get("/home",function(req,res){
+    //console.log(req.session.username);
     res.render("home");
 });
 
@@ -109,11 +112,11 @@ app.post("/formPost",function(req,res){
                 });
                 info.save();*/
                 //console.log(info.hospital);
-                res.render("show",{listOfHospitals:info.hospital});
+                res.render("show",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity});
             }
         }
     });
-
+    
 });
 
 app.get("/donor",function(req,res){
@@ -121,7 +124,42 @@ app.get("/donor",function(req,res){
 });
 
 app.post("/order",function(req,res){
-    
+    request.findOne({name:req.body.hospitalName},function(err,hospital){
+        if(err){
+            console.log(err);
+        }
+        else if(hospital){
+            hospital.orders.push({
+                requestingHospitalName:req.session.username,
+                equipmentName:req.body.equipmentName,
+                equipmentQuantity: req.body.equipmentrequired
+            })
+            hospital.save();
+        }
+        else{
+            request.create({
+                name:req.body.hospitalName,
+                orders:[{
+                    requestingHospitalName:req.session.username,
+                    equipmentName:req.body.equipmentName,
+                    equipmentQuantity: req.body.equipmentrequired
+                }]
+            },function(err,doc){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log(doc);   
+                }
+            });
+            //request.save();
+        }
+    })
+
+});
+
+app.get("/dashboard",function(req,res){
+    res.render("dashboard",{name:userSession});
 });
 
 app.post("/donorPost",function(req,res){
@@ -170,33 +208,10 @@ app.post("/donorPost",function(req,res){
             })
         }
     });
+    res.redirect("/dashboard");
+    userSession=hospitalName;
 });
 
-app.get("/submit",function(req,res){
-    if(req.isAuthenticated()){
-        res.render("submit");
-    }
-    else{
-        res.redirect("/login");
-    }
-});
-
-app.post("/submit",function(req,res){
-    const submittedSecret=req.body.secret;
-    User.findById(req.user.id,function(err,foundUser){
-        if(err){
-            console.log(err);
-        }
-        else{
-            if(foundUser){
-                foundUser.secret=submittedSecret;
-                foundUser.save(function(){
-                    res.redirect("/secrets");
-                });
-            }
-        }
-    });
-});
 
 app.get("/logout",function(req,res){
     req.logout(function(err){
@@ -209,6 +224,37 @@ app.get("/logout",function(req,res){
     });
 });
 
+app.post("/dashboard",function(req,res){
+    if(req.body.hasOwnProperty("request")){
+        res.redirect("/pendingReq");
+    }
+    else if(req.body.hasOwnProperty("update")){
+        res.redirect("/donor");
+    }
+    else{
+        res.redirect("/home");
+    }
+});
+
+app.get("/pendingReq",function(req,res){
+    //console.log("Display pending requests here !");
+    request.findOne({name:req.session.username},function(err,hospital){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(req.session.username);
+            console.log(hospital);
+            res.render("pendingReq",{orders:hospital.orders});
+        }
+    });
+});
+
+app.post("/deleteOrder",function(req,res){
+    const hospitalName=req.body.checkbox;
+    request.updateOne({name:req.session.username},{$pull:{orders:{requestingHospitalName:hospitalName}}});
+    res.redirect("/pendingReq");
+});
 
 app.listen(3000,function(){
     console.log("Server started on port 3000.");

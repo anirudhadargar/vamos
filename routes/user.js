@@ -12,6 +12,7 @@ router.get("/register",function(req,res){
 });
 
 router.post("/register",async(req,res)=>{
+    req.session.username=req.body.username;
     try{
         const{username,password,email,contact,uniqueID}=req.body;
         const user=new User({username,email,contact,uniqueID})
@@ -35,8 +36,9 @@ router.post("/register",async(req,res)=>{
 
 router.post("/login",passport.authenticate('local',{failureFlash: true,failureRedirect:'/register'}),(req,res)=>{
     req.flash("success","welcome back!")
+    req.session.username=req.body.username;
     if(req.body.hasOwnProperty("donor")){
-        res.redirect("/donor");
+        res.render("dashboard",{name:req.body.username});
     }
     else{
         res.redirect("/home");

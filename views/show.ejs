@@ -18,6 +18,10 @@
                 <h3>Hospital Name</h3>  
                 <input type="text" name="hospitalName" value="<%= hospital.name %>" >
               </div>
+              <div>
+                <h3>Equipment Name</h3>
+                <input type="text" name="equipmentName" value="<%=nameOfEquipment%>" >
+              </div>
               <div class="Cost" >
                 <h3>Equipment Rental Cost</h3>
                 <input type="text" name="equipmentCost" value="<%= hospital.cost %>" >
@@ -26,6 +30,10 @@
                 <h3>Hospital Location</h3>
                 <input type="text" name="hospitalLocation" value="<%= hospital.location %>" >
                 </div>
+                <div>
+                    <h3>Quantity Required</h3>
+                    <input type="text" name="equipmentrequired" value="<%=quantity %>" >
+                    </div>  
               <div>
                 <h3>Quantity Available</h3>
                 <input type="text" name="equipmentQuantity" value="<%= hospital.quantity %>" >
