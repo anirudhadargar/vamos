@@ -16,7 +16,7 @@ const flash=require('connect-flash')
 const equip=require('./models/equipment')
 const path=require("path");
 const request=require("./models/equipmentOrder");
-
+const haversine = require("haversine-distance");
 
 const app=express();
 
@@ -96,19 +96,9 @@ app.post("/formPost",function(req,res){
         else{
             //console.log("Found");
             //redirect to show page
-            array=[{
-                "name":string,
-                "distance":number
-            }]
-            List=[{
-                "name":string,
-                "location":string,
-                "cost":number,
-                "quantity": number,
-                "distance":number
-            }];
-            var newList=JSON.parse(List);
-            var newArray=JSON.parse(array);
+            var lat1,lat2,lon1,lon2;
+            var newArray=[];
+            var newList=[];
             User.findOne({username:req.session.username},function(err,hospital){
                 if(err){
                     console.log(hospital);
@@ -118,33 +108,45 @@ app.post("/formPost",function(req,res){
                 else{
                     lat1=hospital.latitude;
                     lon1=hospital.longitude;
+                    console.log(lat1);
+                    console.log(lon1);
                 }
             });
             for(var i=0;i<info.hospital.length;i++){
                 User.findOne({username:info.hospital[i].name},function(err,doc){
-                    lat2=doc.latitude;
-                    lon2=doc.longitude;
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        lat2=doc.latitude;
+                        lon2=doc.longitude;
+                        console.log(lat2);
+                        console.log(lon2);
+                    }
                 });
-                var R = 6371; // Radius of the earth in km
+                var point1 = { "lat": lat1, "lng": lon1 }
+
+                //Second point in your haversine calculation
+                var point2 = { "lat": lat2, "lng": lon2}
+
+                var haversine_m = haversine(point1, point2); //Results in meters (default)
+                var haversine_km = haversine_m /1000; //Results in kilometers
+                /*var R = 6371; // Radius of the earth in km
                 var dLat = deg2rad(lat2-lat1);  // deg2rad below
                 var dLon = deg2rad(lon2-lon1); 
-                var a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2)
-                ; 
+                var a = Math.sin(dLat/2) * Math.sin(dLat/2) +Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
                 var d = R * c; // Distance in km
-                //console.log(d);
                 function deg2rad(deg) {
                     return deg * (Math.PI/180)
                 }
-                array.push({
-                    name:info.hospital[i].name,
-                    distance:d,
+                console.log(d);*/
+                newArray.push({
+                    "name":info.hospital[i].name,
+                    "distance":haversine_km
                 });
             }
-            var lat1,lat2,lon1,lon2;
             if(Boolean(req.body.status)){
                 //console.log(req.session.username);
                 newArray.sort(function(a,b){
@@ -157,11 +159,11 @@ app.post("/formPost",function(req,res){
                     for(var j=0;j<info.hospital.length;j++){
                         if(newArray[i].name==info.hospital[j].name){
                             newList.push({
-                                name:info.hospital[j].name,
-                                location:info.hospital[j].location,
-                                cost:info.hospital[j].cost,
-                                quantity: info.hospital[j].quantity,
-                                distance:newArray[i].distance
+                                "name":info.hospital[j].name,
+                                "location":info.hospital[j].location,
+                                "cost":info.hospital[j].cost,
+                                "quantity": info.hospital[j].quantity,
+                                //"distance":newArray[i].distance
                             });
                         }
                     }
