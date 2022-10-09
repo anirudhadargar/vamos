@@ -1,4 +1,5 @@
 //jshint esversion:6
+
 require("dotenv").config();
 const express=require("express");
 const bodyParser=require("body-parser");
@@ -95,8 +96,79 @@ app.post("/formPost",function(req,res){
         else{
             //console.log("Found");
             //redirect to show page
+            array=[{
+                "name":string,
+                "distance":number
+            }]
+            List=[{
+                "name":string,
+                "location":string,
+                "cost":number,
+                "quantity": number,
+                "distance":number
+            }];
+            var newList=JSON.parse(List);
+            var newArray=JSON.parse(array);
+            User.findOne({username:req.session.username},function(err,hospital){
+                if(err){
+                    console.log(hospital);
+                    console.log(hospital.address);
+                    console.log(err);
+                }
+                else{
+                    lat1=hospital.latitude;
+                    lon1=hospital.longitude;
+                }
+            });
+            for(var i=0;i<info.hospital.length;i++){
+                User.findOne({username:info.hospital[i].name},function(err,doc){
+                    lat2=doc.latitude;
+                    lon2=doc.longitude;
+                });
+                var R = 6371; // Radius of the earth in km
+                var dLat = deg2rad(lat2-lat1);  // deg2rad below
+                var dLon = deg2rad(lon2-lon1); 
+                var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+                var d = R * c; // Distance in km
+                //console.log(d);
+                function deg2rad(deg) {
+                    return deg * (Math.PI/180)
+                }
+                array.push({
+                    name:info.hospital[i].name,
+                    distance:d,
+                });
+            }
+            var lat1,lat2,lon1,lon2;
             if(Boolean(req.body.status)){
-
+                //console.log(req.session.username);
+                newArray.sort(function(a,b){
+                    if(a.distance==b.distance){
+                        return a.distance>b.distance?1:a.distance<b.distance?-1:0;
+                    }
+                    return a.distance>b.distance?1:-1;
+                });
+                for(var i=0;i<newArray.length;i++){
+                    for(var j=0;j<info.hospital.length;j++){
+                        if(newArray[i].name==info.hospital[j].name){
+                            newList.push({
+                                name:info.hospital[j].name,
+                                location:info.hospital[j].location,
+                                cost:info.hospital[j].cost,
+                                quantity: info.hospital[j].quantity,
+                                distance:newArray[i].distance
+                            });
+                        }
+                    }
+                }
+                console.log(newArray);
+                console.log(newList);
+                res.render("show",{listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity});
             }
             else{
                 info.hospital.sort(function(a,b){
@@ -105,6 +177,7 @@ app.post("/formPost",function(req,res){
                     }
                     return a.cost>b.cost?1:-1;
                 });
+
                 /*info.hospital.push({
                     name: "Appolo",
                     location: "Banglore",
@@ -194,7 +267,7 @@ app.post("/donorPost",function(req,res){
             console.log("Successfully updated!");
         }
         else{
-            equip.insertOne({
+            equip.create({
                 name:equipment,
                 description:"",
                 category:"",
@@ -238,22 +311,49 @@ app.post("/dashboard",function(req,res){
 
 app.get("/pendingReq",function(req,res){
     //console.log("Display pending requests here !");
+    var empty=[];
     request.findOne({name:req.session.username},function(err,hospital){
         if(err){
             console.log(err);
         }
-        else{
+        else if(hospital){
             console.log(req.session.username);
             console.log(hospital);
             res.render("pendingReq",{orders:hospital.orders});
+        }
+        else{
+            res.render("pendingReq",{orders:empty});
         }
     });
 });
 
 app.post("/deleteOrder",function(req,res){
     const hospitalName=req.body.checkbox;
-    request.updateOne({name:req.session.username},{$pull:{orders:{requestingHospitalName:hospitalName}}});
-    res.redirect("/pendingReq");
+    var newOrders;
+    var hospitalToDelete;
+    /*request.findOne({name:req.session.username},function(err,doc){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(doc.orders);
+        }
+    })*/
+    request.findOne({name:req.session.username},function(err,hospital){
+        if(err){
+            console.log(err);
+        }
+        else{
+
+            newOrders=hospital.orders.filter((item)=>item.requestingHospitalName!=hospitalName);
+            hospital.orders=newOrders;
+            hospital.save(function(err){
+                if(!err){
+                    res.redirect("/pendingReq");
+                }
+            });
+        }
+    });
 });
 
 app.listen(3000,function(){

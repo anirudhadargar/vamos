@@ -7,6 +7,8 @@ const UserSchema=new Schema({
     uniqueID: String,
     contact:Number,
     email:String,
+    latitude:Number,
+    longitude:Number
 })
 
 UserSchema.plugin(passportLocalMongoose)

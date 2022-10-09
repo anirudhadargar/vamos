@@ -14,14 +14,15 @@ router.get("/register",function(req,res){
 router.post("/register",async(req,res)=>{
     req.session.username=req.body.username;
     try{
-        const{username,password,email,contact,uniqueID}=req.body;
-        const user=new User({username,email,contact,uniqueID})
+        const{username,password,email,contact,uniqueID,address,latitude,longitude}=req.body;
+        console.log(latitude,longitude);
+        const user=new User({username,email,contact,uniqueID,address,latitude,longitude});
         const UserAuth=await User.register(user,password)
         req.login(UserAuth,err=>{
             if(err) return next(err);
             req.flash('success',`Hello, ${username} Nice to See You`)
             if(req.body.hasOwnProperty("donor")){
-                res.redirect("/donor");
+                res.render("dashboard",{name:req.body.username});
             }
             else{
                 res.redirect('/home')
