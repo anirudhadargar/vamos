@@ -41,19 +41,6 @@ mongoose.connect("mongodb://localhost:27017/manipalDB",{
     useNewUrlParser:true,
     useUnifiedTopology:true
 });
-// const userSchema=new mongoose.Schema({
-//     username: String,
-//     password: String,
-//     uniqueID: String,
-//     ContactNumber:Number,
-//     email:String,
-// });
-
-// userSchema.plugin(passportLocalMongoose);
-// userSchema.plugin(findOrCreate);
-
-
-//requiring ejs-mate
 app.engine('ejs',ejsMate);
 
 
@@ -89,65 +76,61 @@ app.get("/form",function(req,res){
 app.post("/formPost",function(req,res){
     //console.log(req.body);
     const equipmentName=req.body.equipmentName;
-    equip.findOne({name:equipmentName},function(err,info){
+    equip.findOne({name:equipmentName},async(err,info)=>{
         if(err){
             console.log(err);
         }
         else{
-            //console.log("Found");
-            //redirect to show page
-            var lat1,lat2,lon1,lon2;
             var newArray=[];
             var newList=[];
-            User.findOne({username:req.session.username},function(err,hospital){
-                if(err){
-                    console.log(hospital);
-                    console.log(hospital.address);
-                    console.log(err);
-                }
-                else{
-                    lat1=hospital.latitude;
-                    lon1=hospital.longitude;
-                    console.log(lat1);
-                    console.log(lon1);
-                }
-            });
-            for(var i=0;i<info.hospital.length;i++){
-                User.findOne({username:info.hospital[i].name},function(err,doc){
+            var coordinates=[];                    
+            if(Boolean(req.body.status)){
+                console.log("start");
+                var lat1,lat2,lon1,lon2;
+                var newArray=[];
+                var newList=[];
+                User.findOne({username:req.session.username},function(err,hospital){
                     if(err){
+                        console.log(hospital);
+                        console.log(hospital.address);
                         console.log(err);
                     }
                     else{
-                        lat2=doc.latitude;
-                        lon2=doc.longitude;
-                        console.log(lat2);
-                        console.log(lon2);
+                        lat1=hospital.latitude;
+                        lon1=hospital.longitude;
+                        coordinates.push({
+                            "lat":hospital.latitude,
+                            "lng": hospital.longitude,
+                            "info": hospital.username
+                        });
+                        //console.log(lat1);
+                        //console.log(lon1);
                     }
                 });
-                var point1 = { "lat": lat1, "lng": lon1 }
-
-                //Second point in your haversine calculation
-                var point2 = { "lat": lat2, "lng": lon2}
-
-                var haversine_m = haversine(point1, point2); //Results in meters (default)
-                var haversine_km = haversine_m /1000; //Results in kilometers
-                /*var R = 6371; // Radius of the earth in km
+                for(var i=0;i<info.hospital.length;i++){
+                   const doc=await User.findOne({username:info.hospital[i].name});
+                lat2=doc.latitude;
+                lon2=doc.longitude;
+                coordinates.push({
+                    "lat":doc.latitude,
+                    "lng":doc.longitude,
+                    "info":doc.username
+                });
+                var R = 6371; // Radius of the earth in km
                 var dLat = deg2rad(lat2-lat1);  // deg2rad below
                 var dLon = deg2rad(lon2-lon1); 
                 var a = Math.sin(dLat/2) * Math.sin(dLat/2) +Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
-
+            
                 var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-                var d = R * c; // Distance in km
+                var d = Math.ceil(parseFloat((R * c).toFixed(2))); // Distance in km
+                console.log(d);
+                newArray.push({
+                    "name":info.hospital[i].name,
+                    "distance":d
+                });
                 function deg2rad(deg) {
                     return deg * (Math.PI/180)
                 }
-                console.log(d);*/
-                newArray.push({
-                    "name":info.hospital[i].name,
-                    "distance":haversine_km
-                });
-            }
-            if(Boolean(req.body.status)){
                 //console.log(req.session.username);
                 newArray.sort(function(a,b){
                     if(a.distance==b.distance){
@@ -155,22 +138,26 @@ app.post("/formPost",function(req,res){
                     }
                     return a.distance>b.distance?1:-1;
                 });
+                }
                 for(var i=0;i<newArray.length;i++){
-                    for(var j=0;j<info.hospital.length;j++){
-                        if(newArray[i].name==info.hospital[j].name){
-                            newList.push({
-                                "name":info.hospital[j].name,
-                                "location":info.hospital[j].location,
-                                "cost":info.hospital[j].cost,
-                                "quantity": info.hospital[j].quantity,
-                                //"distance":newArray[i].distance
-                            });
+                        for(var j=0;j<info.hospital.length;j++){
+                            if(newArray[i].name==info.hospital[j].name){
+                                newList.push({
+                                    "name":info.hospital[j].name,
+                                    "location":info.hospital[j].location,
+                                    "cost":info.hospital[j].cost,
+                                    "quantity": info.hospital[j].quantity,
+                                    "distance":newArray[i].distance
+                                });
+                            }
                         }
-                    }
                 }
                 console.log(newArray);
                 console.log(newList);
-                res.render("show",{listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity});
+                console.log("working");
+
+                res.render("shows",{listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates});
+                // {listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates}
             }
             else{
                 info.hospital.sort(function(a,b){
@@ -187,11 +174,11 @@ app.post("/formPost",function(req,res){
                 });
                 info.save();*/
                 //console.log(info.hospital);
-                res.render("show",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity});
+                res.render("shows",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity});
             }
         }
     });
-    
+
 });
 
 app.get("/donor",function(req,res){
@@ -229,7 +216,8 @@ app.post("/order",function(req,res){
             });
             //request.save();
         }
-    })
+    });
+    res.render("payment",{hospitalName:req.body.hospitalName,equipmentName:req.body.equipmentName,equipmentCost:req.body.equipmentCost,equipmentrequired:req.body.equipmentrequired});
 
 });
 

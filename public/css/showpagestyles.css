@@ -26,3 +26,20 @@ input{
 input:focus{
     outline:none!important;
 }
+  .managemap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #map{
+   
+    width: 50%;
+    height: 50vh;
+    /* background-color: black; */
+  }
+  
+dummy
+  {
+    height: 100vh;
+    width: 100%;
+  }

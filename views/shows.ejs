@@ -30,12 +30,12 @@
                 <h3>Hospital Location</h3>
                 <input type="text" name="hospitalLocation" value="<%= hospital.location %>" >
                 </div>
-                <!--<%if(hospital.distance){%>
+                <%if(hospital.distance){%>
                     <div>
                         <h3>Distance</h3>
                         <input type="text" name="distance" value="<%= hospital.distance %>" >
                         </div>
-                <%}%>-->
+                <%}%>
                 <div>
                     <h3>Quantity Required</h3>
                     <input type="text" name="equipmentrequired" value="<%=quantity %>" >
@@ -53,4 +53,46 @@
     </div>
     
   </body>
+</html>
+    <div class="dummy"></div>
+    <div class="managemap">
+    
+      <div id="map"></div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1qB06FA_Q_XSiZgFFnBMRRf2Ze31igSo&callback=initMap&v=weekly"></script>
+    
+     <script>
+      let map;
+    
+    function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat:28.323, lng: 83.344 },
+      zoom: 8,
+    });
+    }
+    
+    var markers=JSON.parse('<%-JSON.stringify(hospitalCoordinates)%>');
+    /*const markers =[
+        {lat:28.323,lng:83.344,info:"first marker"}
+    
+    ]*/
+    markers.forEach(m=>{
+        const marker = new google.maps.Marker({
+            position:{lat:m.lat,lng:m.lng},
+    
+        })
+        const popupContent = new google.maps.InfoWindow()
+    google .maps.event.addListener(marker,'click',(function(marker){
+        return function(){
+             popupContent.setContent(m.info)
+             popupContent.open(map,marker)
+        }
+    })(marker)
+    )
+    
+    marker.setMap(map);
+    })
+    
+    </script>
+</body>
 </html>
