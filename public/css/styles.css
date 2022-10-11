@@ -1,6 +1,28 @@
+:root{
+  --main-bg-color:rgb(255, 196, 196);
+  --cardcolour-1:rgb(182, 105, 255);
+  --white:white;
+  --cardcolour-2:#aa8bff;
+  --statisticscolor:rgb(182, 105, 255);
+  --fontcolor:black;
+  --fontcolor2:rgb(0, 0, 0);
+  --shadowcolor:white;
+}
+
+.darktheme{
+  --main-bg-color:rgb(0, 0, 0);
+  --cardcolour-1:rgb(241, 255, 115);
+  --white:white;
+  --cardcolour-2:#f8ffe3;
+  --statisticscolor:rgb(0, 0, 0);
+  --fontcolor:white;
+  --fontcolor2:rgb(0, 0, 0);
+  --shadowcolor:rgb(248, 255, 192);
+}
+
 body{
   display: inline;
-  background-color: rgb(115 166 255);
+  background-color: var(--main-bg-color);
 color: blue;
 z-index: -100;
 scroll-behavior: smooth;
@@ -9,6 +31,7 @@ a{
 text-decoration: none;
 }
 * {
+color:var(--fontcolor);
 padding: 0;
 margin: 0;
 scroll-behavior: smooth;
@@ -38,21 +61,23 @@ body {
   100% { opacity: 1; }
 }
 .navbar a{
-background-color: rgb(115 166 255);
+  background-color: rgb(255, 185, 185);
   color: rgb(0, 0, 0);
 border: none;
 padding: 15px 32px;
 text-align: center;
 text-decoration: none;
+opacity: 50%;
+
 
 font-size: 22px;
-border-radius: 50%;
+border-radius: 10%;
 }
 header{
 position: fixed;
 top: 0;
 width: 100%;
-background: linear-gradient(rgb(108, 115, 255), rgb(255, 255, 255));
+background: linear-gradient(var(--cardcolour-2), var(--cardcolour-1));
 
 z-index: 100000;
 }
@@ -81,20 +106,19 @@ ul {
 
 border-radius: 50%;
 }
-#favicon:hover{
+#favicon{
 cursor: pointer;
-
 }
 .navright li{
 display: inline-block;
 margin-top: 1em;
-text-shadow: 0 0 20px #6d8cff, 0 0 30px #0060e6;
+/* text-shadow: 0 0 20px #6d8cff, 0 0 30px #0060e6; */
 
   margin-right: 2em;
 }
-#nav li a.active {
-color: #1e1e1e;
-background: white;
+#nav li a {
+color: var(--fontcolor);
+background: var(--main-bg-color);
 }
 .navright li a{
   transition: all 0.1 ease 0s;
@@ -102,7 +126,7 @@ background: white;
 
 .navright li a:hover{
   color: rgb(0, 0, 0);
-  box-shadow: 0px 0px 20px 0 rgba(0, 25, 253, 0.982), 0 17px 50px 0 rgb(0, 85, 254);
+  box-shadow: 0px 0px 10px 0 rgba(143, 151, 255, 0.982), 0 0px 20px 0 rgb(177, 192, 255);
 }
 /* navbarend */
 
@@ -110,12 +134,12 @@ background: white;
 .home{
   position: relative;
   height: 800px;
-  background-color: rgb(115 166 255);
+  background-color: var(--main-bg-color);
 
   
 }
 #homeimage1 img{
-  box-shadow: 0px 0px 50px 0 rgba(0, 25, 253, 0.982), 0 17px 50px 0 rgb(0, 85, 254);
+  box-shadow: 0px 0px 50px 0 var(--shadowcolor);
 
   width: 40em;
 position: absolute;
@@ -123,14 +147,14 @@ position: absolute;
 height: 506px;
 left: 75px;
 top: 197px;
-opacity: 60%;
+opacity: 80%;
 z-index: 2;
 scale: 0.8;
 
 border-radius: 100px;
 }
 #homeimage2 img{
-  box-shadow: 0px 0px 50px 0 rgba(0, 25, 253, 0.982), 0 17px 50px 0 rgb(0, 85, 254);
+  box-shadow: 0px 0px 50px 0 rgba(255, 211, 211, 0.982), 0 17px 50px 0 rgb(255, 255, 255);
 
   width: 700px;
   position: fixed;
@@ -148,29 +172,32 @@ border-radius: 50%;
 }
 #explore{
   position: absolute;
-  
   top: 598px;
   left: 324px;
-
   width: 130px;
   height: 50px;
-  border-radius: 40%;
-font-size: 2em;
-transition: transform 0.4s;
-background: linear-gradient(rgb(142, 217, 255), rgb(99, 85, 255)), 
-linear-gradient(to right, red, purple);
-/* transition: box-shadow .5s; */
+  border-radius: 19%;
+  font-size: 2em;
+  transition: transform 0.4s;
+  background:  var(--cardcolour-1)
+  /* transition: box-shadow .5s; */
+  /* color:red; */
   
 }
 #explore:hover{
-  box-shadow: 0px 0px 20px 0 rgba(0, 25, 253, 0.982), 0 17px 50px 0 rgb(0, 85, 254);
+  box-shadow: 0px 0px 5px 0 rgba(255, 255, 255, 0.982), 0 17px 50px 0 rgb(255, 202, 202);
 cursor: pointer;
 transform: scale(1.1);
 
 
 }
-#hometext-1{
+#explore a{
+  color:var(--fontcolor2)
 
+  
+}
+#hometext-1{
+color: var(--fontcolor);
 position: absolute;
 width: 491px;
 height: 108px;
@@ -183,7 +210,7 @@ font-weight: 400;
 font-size: 50px;
 
 z-index: 99;
-color: #000000;
+/* color: #000000; */
 }
 #hometext-2{
  font-size: 2em;
@@ -238,11 +265,14 @@ color: #ffffff;
 }
   */
 .statistics{
-  height: 800px;
-  background-color: rgb(115 166 255);
+
+  background-color: var(--main-bg-color);
 align-items: center;
-
-
+position: relative;
+height: 800px;
+width: 90%;
+margin: 50px auto;
+box-sizing: border-box;
 
 position: relative;
 
@@ -259,7 +289,7 @@ gap: 10px;
 z-index: 100;
 }
 .container {
-z-index: 1000000;
+z-index: 10;
 width: 28vmin;
 height: 35vmin;
 display: flex;
@@ -269,7 +299,7 @@ padding: 1em 0;
 position: relative;
 font-size: 16px;
 border-radius: 0.5em;
-background-color: #A683E3;
+background-color: var(--statisticscolor);
 border-bottom: 10px solid #FAFA33;
 opacity: 100%;
 scale: 1.1;
@@ -297,7 +327,7 @@ line-height: 0;
 @media screen and (max-width: 1024px) {
 .wrapper {
   width: 85vw;
-z-index: 100;
+
 }
 .container {
   height: 26vmin;
@@ -317,6 +347,12 @@ z-index: 100;
   font-size: 14px;
 }
 }
+.row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-flow: wrap;
+}
 @media screen and (max-width: 480px) {
 .wrapper {
   gap: 15px;
@@ -330,12 +366,16 @@ z-index: 100;
 
 .contact{
   position: relative;
-  background-color: rgb(0, 0, 0);
+
   height: 600px;
-  z-index: 1000;
+z-index: 100;
   opacity: 90%;
 }
+.contact .cont{
+background-color: var(--main-bg-color);
+}
 .box-1{
+  z-index: 100;
   position: absolute;
   width: 575px;
 height: 348px;
@@ -344,10 +384,11 @@ top: 123px;
 
 border-radius: 49px;
 z-index: 2;
-background-color: #ff4b4b;
+background-color:var( --cardcolour-1);
 opacity: 100%;
 }
 .box-2{
+  z-index: 100;
   position: absolute;
 width: 435px;
 height: 252px;
@@ -356,15 +397,15 @@ top: 219px;
 
 border-radius: 49px;
 z-index: 3;
-background-color: #ffacac;
+background-color:var(--cardcolour-2);
 opacity: 90%;
 }
 .box-2 #quote{
 text-align: justify;
 margin: 2rem;
-color: rgb(250, 250, 250);
+color: rgb(0, 0, 0);
 font-size: 1.5rem;
-text-shadow: 0 0 5px rgb(0 0 0), 0 0 20px rgb(6 0 0);
+text-shadow: 0 0 5px rgb(255, 255, 255), 0 0 10px rgb(255, 255, 255);
 
 
 margin-top: 3rem;
@@ -404,8 +445,8 @@ padding-left: 3rem;
   position: absolute;
   width: 200px;
   height: 200px;
-  background-image: linear-gradient(to right, red , rgb(0, 72, 255));
-
+  background-image: linear-gradient(to right,var( --cardcolour-1) ,var( --main-bg-color));
+z-index: 1000;
   left: 1020px;
   top: 90px;
   border-radius: 57px;
@@ -415,7 +456,7 @@ padding-left: 3rem;
 position: absolute;
 width: 200px;
 height: 200px;
-background-image: linear-gradient(to right, red , rgb(0, 72, 255));
+background-image: linear-gradient(to right,var( --cardcolour-1), var( --main-bg-color));
 left: 946px;
   top: 290px;
   border-radius: 57px;
@@ -425,7 +466,7 @@ left: 946px;
 position: absolute;
 width: 200px;
 height: 200px;
-background-image: linear-gradient(to right, red , rgb(0, 72, 255));
+background-image: linear-gradient(to right, var( --cardcolour-1) , var( --main-bg-color));
 
 
 left: 1146px;
@@ -453,9 +494,10 @@ height: 10rem;
 .rental{
 height: 700px;
 color: red;
-background-color: rgb(115 166 255);
-margin-left: 4rem;
+background-color: var(--main-bg-color);
+padding-left: 4rem;
 position: relative;
+/* z-index: 100; */
 }
 
 .search{
@@ -520,16 +562,16 @@ padding: 2rem;
 width: 10rem;
 height: 15rem ;
 text-decoration:none;
-background-image: linear-gradient( rgb(249, 249, 249) , rgb(0, 72, 255));
+background-image: linear-gradient( rgb(249, 249, 249) , var( --cardcolour-1));
 transition: 0.4s;
-box-shadow: 0px 0px 20px 0 rgba(136, 148, 255, 0.982), 0 17px 50px 0 rgb(68, 127, 246);
+box-shadow: 0px 0px 20px var(--shadowcolor);
 
 }
 .productstype .one:hover{
 width: 12rem;
 height: 17rem;
 cursor: pointer;
-box-shadow: 0px 0px 20px 0 rgba(0, 25, 253, 0.982), 0 17px 50px 0 rgb(0, 85, 254);
+box-shadow: 0px 0px 20px 0 rgba(255, 200, 200, 0.982), 0 17px 50px 0 rgb(255, 209, 209);
 
 }
 .productstype .one img{
@@ -541,5 +583,3 @@ margin-top: 1.8rem;
 font-size: 2rem;
 color: #000000;
 }
-
-

@@ -101,14 +101,14 @@ app.post("/formPost",function(req,res){
                         coordinates.push({
                             "lat":hospital.latitude,
                             "lng": hospital.longitude,
-                            "info": hospital.username
+                            "info": hospital.username,
                         });
                         //console.log(lat1);
                         //console.log(lon1);
                     }
                 });
                 for(var i=0;i<info.hospital.length;i++){
-                   const doc=await User.findOne({username:info.hospital[i].name});
+                const doc=await User.findOne({username:info.hospital[i].name});
                 lat2=doc.latitude;
                 lon2=doc.longitude;
                 coordinates.push({
@@ -182,7 +182,18 @@ app.post("/formPost",function(req,res){
 });
 
 app.get("/donor",function(req,res){
-    res.render("donor");
+    var hospitalLocation="";
+    console.log(req.session.username);
+    User.findOne({username:req.session.username},function(err,doc){
+        if(err){
+            console.log(err);
+        }
+        else{
+            hospitalLocation=doc.address;
+            console.log(hospitalLocation);
+            res.render("donor",{address:hospitalLocation});
+        }
+    })
 });
 
 app.post("/order",function(req,res){
@@ -230,6 +241,7 @@ app.post("/donorPost",function(req,res){
     const quantity=req.body.Quantity;
     const hospitalName=req.body.hospitalName;
     const hospitalLocation=req.body.hospitalAddress;
+    console.log(hospitalLocation);
     const equipmentCost=req.body.cost;
     equip.findOne({"name":equipment},function(err,info){
         if(err){
@@ -241,6 +253,7 @@ app.post("/donorPost",function(req,res){
                 if(info.hospital[i].name==hospitalName){
                     info.hospital[i].quantity=quantity;
                     info.hospital[i].cost=equipmentCost;
+                    info.hospital[i].location=hospitalLocation;
                     flag=1;
                     break;
                 }
@@ -271,8 +284,8 @@ app.post("/donorPost",function(req,res){
             })
         }
     });
-    res.redirect("/dashboard");
     userSession=hospitalName;
+    res.redirect("/dashboard");
 });
 
 

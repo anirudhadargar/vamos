@@ -16,12 +16,13 @@ router.post("/register",async(req,res)=>{
     try{
         const{username,password,email,contact,uniqueID,address,latitude,longitude}=req.body;
         console.log(latitude,longitude);
-        const user=new User({username,email,contact,uniqueID,address,latitude,longitude});
+        const user=await new User({username,email,contact,uniqueID,address,latitude,longitude});
         const UserAuth=await User.register(user,password)
         req.login(UserAuth,err=>{
             if(err) return next(err);
             req.flash('success',`Hello, ${username} Nice to See You`)
             if(req.body.hasOwnProperty("donor")){
+                req.session.username=req.body.username;
                 res.render("dashboard",{name:req.body.username});
             }
             else{

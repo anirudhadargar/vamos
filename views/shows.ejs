@@ -5,94 +5,110 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/showpagestyles.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <title>Vamos</title>
   </head>
   <body>
-    <div class="d-flex flex-column">
-        <%listOfHospitals.forEach(function(hospital){%>
-            <form class="form-control-sm" method="post" action="/order"> 
-            <div class="card-body">
-              <img src="/assets/images/im5.jpg" alt="">
-              <div class="Hospital-Name" >
-                <h3>Hospital Name</h3>  
+
+    <div class="container">
+
+            <div class="row" method="post" action="/order"> 
+              <%listOfHospitals.forEach(function(hospital){%>
+            <div class="card">
+              <div class="cardheader">
+
+              <img src="/assets/images/im5.jpg" alt="Avatar" style="width:100%">
+            <div class="cardbody">
+              <div class="Hospital-Name one" >
+                <label for="">Hospital Name :</label>
                 <input type="text" name="hospitalName" value="<%= hospital.name %>" >
               </div>
-              <div>
-                <h3>Equipment Name</h3>
+              <div class="one">
+              <label for="">Equipment Name :</label>
                 <input type="text" name="equipmentName" value="<%=nameOfEquipment%>" >
               </div>
-              <div class="Cost" >
-                <h3>Equipment Rental Cost</h3>
+              <div class="Cost one" >
+                <label for="">Rental Cost :</label>
                 <input type="text" name="equipmentCost" value="<%= hospital.cost %>" >
               </div>
-              <div>
-                <h3>Hospital Location</h3>
+              <div class="one">
+                <label for="">Hospital Location :</label>
                 <input type="text" name="hospitalLocation" value="<%= hospital.location %>" >
                 </div>
                 <%if(hospital.distance){%>
-                    <div>
-                        <h3>Distance</h3>
+                    <div class="one">
+                      <label for="">Distance :</label>
                         <input type="text" name="distance" value="<%= hospital.distance %>" >
                         </div>
                 <%}%>
-                <div>
-                    <h3>Quantity Required</h3>
+                <div class="one">
+                  <label for="">Quantity Required :</label>
                     <input type="text" name="equipmentrequired" value="<%=quantity %>" >
                     </div>  
-              <div>
-                <h3>Quantity Available</h3>
+              <div class="one">
+                <label for="">Quantity Available :</label>
                 <input type="text" name="equipmentQuantity" value="<%= hospital.quantity %>" >
                 </div>
               <div class="exbutton">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Select</button>
               </div>
             </div>
-          </form> 
+          </div>
+          </div>
           <%});%>
-    </div>
-    
-  </body>
-</html>
-    <div class="dummy"></div>
+        </div>
+</div>
     <div class="managemap">
-    
+
       <div id="map"></div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1qB06FA_Q_XSiZgFFnBMRRf2Ze31igSo&callback=initMap&v=weekly"></script>
-    
-     <script>
-      let map;
-    
-    function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat:28.323, lng: 83.344 },
-      zoom: 8,
-    });
-    }
-    
-    var markers=JSON.parse('<%-JSON.stringify(hospitalCoordinates)%>');
-    /*const markers =[
-        {lat:28.323,lng:83.344,info:"first marker"}
-    
-    ]*/
-    markers.forEach(m=>{
-        const marker = new google.maps.Marker({
-            position:{lat:m.lat,lng:m.lng},
-    
-        })
-        const popupContent = new google.maps.InfoWindow()
-    google .maps.event.addListener(marker,'click',(function(marker){
-        return function(){
-             popupContent.setContent(m.info)
-             popupContent.open(map,marker)
-        }
-    })(marker)
-    )
-    
-    marker.setMap(map);
-    })
-    
-    </script>
-</body>
+  </body>
 </html>
+
+
+    
+      
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1qB06FA_Q_XSiZgFFnBMRRf2Ze31igSo&callback=initMap&v=weekly"async></script>
+<!-- <script src="./display.js"></script> -->
+<script>
+    let map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat:28.323, lng: 83.344 },
+    zoom: 8,
+  });
+}
+    </script>
+     <script>
+  
+    
+    // var markers=JSON.parse('<%-JSON.stringify(hospitalCoordinates)%>');
+
+
+    const markers =[
+    {lat:28.323,lng:83.344,info:"first marker"}
+
+]
+console.log("working1");
+markers.forEach(m=>{
+  const marker = new google.maps.Marker({
+  
+    position:{lat:m.lat,lng:m.lng},
+    
+  })
+  console.log("working2");
+    const popupContent = new google.maps.InfoWindow()
+google .maps.event.addListener(marker,'click',(function(marker){
+    return function(){
+         popupContent.setContent(m.info)
+         popupContent.open(map,marker)
+    }
+})(marker)
+)
+console.log("working");
+marker.setMap(map);
+})
+
+
+    </script>
