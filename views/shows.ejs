@@ -11,9 +11,10 @@
   <body>
 
     <div class="container">
-
-            <div class="row" method="post" action="/order"> 
-              <%listOfHospitals.forEach(function(hospital){%>
+        <%listOfHospitals.forEach(function(hospital){%>
+        <form method="post" action="/order">
+        <div class="row">
+            
             <div class="card">
               <div class="cardheader">
 
@@ -54,9 +55,12 @@
               </div>
             </div>
           </div>
-          </div>
-          <%});%>
         </div>
+    
+   
+    </div>
+</form>
+<%});%>
 </div>
     <div class="managemap">
 

@@ -17,6 +17,7 @@ const equip=require('./models/equipment')
 const path=require("path");
 const request=require("./models/equipmentOrder");
 const haversine = require("haversine-distance");
+const stripe = require('stripe')('sk_test_51LoWOgSA0dw3ZeMMl9VJ55DMbyMI1XU9XQbN3gUjDVTYw1HwSj72az1AZIT9cZxcc3IXeOilDQcGv5fC0aCIfB1100gatFdKpu');
 
 const app=express();
 
@@ -228,7 +229,8 @@ app.post("/order",function(req,res){
             //request.save();
         }
     });
-    res.render("payment",{hospitalName:req.body.hospitalName,equipmentName:req.body.equipmentName,equipmentCost:req.body.equipmentCost,equipmentrequired:req.body.equipmentrequired});
+    const totalCost=req.body.equipmentCost*req.body.equipmentrequired;
+    res.render("paymentDetails",{hospitalName:req.body.hospitalName,equipmentName:req.body.equipmentName,equipmentCost:req.body.equipmentCost,equipmentrequired:req.body.equipmentrequired,totalCost:totalCost});
 
 });
 
@@ -359,9 +361,52 @@ app.post("/deleteOrder",function(req,res){
     });
 });
 
+// CHANGES MADE FOR IN HERE...
+app.get('/paymentDetails',(req,res)=>{
+    res.render('paymentDetails')
+})
+//after show ejs we have to post the details to the ejs page
+
+
+// app.get('/payment',(req,res)=>{
+    
+// })
+
+app.post('/paymentDetails',(req,res)=>{
+    res.render('payment')
+})
+const calculateOrderAmount = (items) => {
+    // Replace this constant with a calculation of the order's amount
+    // Calculate the order total on the server to prevent
+    // people from directly manipulating the amount on the client
+    return 1400;
+  };
+  
+  app.post("/create-payment-intent", async (req, res) => {
+    const { items } = req.body;
+  
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: calculateOrderAmount(items),
+      currency: "inr",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    //   payment_method_types:['card'],
+    });
+  
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  });
+
+
+
 app.listen(3000,function(){
     console.log("Server started on port 3000.");
 });
+
+
 
 //AIzaSyBtMYluDWhixYcCNVmuYvZP4joZeDvvFd8
 
