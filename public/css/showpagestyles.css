@@ -4,12 +4,24 @@ body {
     background-image: linear-gradient(to right, rgb(184, 239, 246),rgb(155, 220, 255),rgb(171, 192, 255));
     font-family: sans-serif;
   }
-  
+
+
+  .marker {
+     background-image: url('/assets/images/marker.png');
+     background-size: cover;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     cursor: pointer;
+  }
   .container {
-    width: 90%;
-    margin: 50px auto;
-    box-sizing: border-box;
-    line-height: 2rem;
+    /* width: 100vw; */
+    /* margin: 50px auto; */
+    /* box-sizing: border-box; */
+    /* line-height: 2rem; */
+    display:flex;
+    flex-flow:row nowrap;
+    align-content: space-between;
   }
   h3{
     display: block;
@@ -23,15 +35,10 @@ body {
     margin-bottom: 50px;
   }
   
-  .row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-flow: wrap;
-  }
+
   
   .card {
-    width: 25%;
+    width: auto;
     background: #fff;
     border: 1px solid #ccc;
     margin-bottom: 50px;
@@ -92,7 +99,12 @@ body {
     height: 50vh;
     /* background-color: black; */
   }
-  
+  /* .fm{
+    display:inline;
+    margin:0;
+    display:flex;
+    flex-direction: row-reverse;
+  } */
   /* .dummy
   {
     height: 100vh;

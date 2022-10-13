@@ -1,0 +1,18 @@
+.hello{
+    margin-left: 110px;
+    color: red;
+  }
+  .payment{
+    color: red;
+    font-size: 20px;
+    margin-left: 27rem;
+    margin-top:  8rem;
+  }
+  li{
+    color: black;
+  }
+  .btn{
+    margin-left: 44rem;
+    display: flex;
+    justify-content: center;
+  }

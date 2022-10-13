@@ -1,0 +1,19 @@
+.hello{
+    margin-left: 110px;
+    color: #00FFFF;
+  }
+  .payment{
+    color: #00FFFF;
+    font-size: 20px;
+    margin-left: 27rem;
+    margin-top:  8rem;
+  }
+  li{
+    color: black;
+  }
+  
+  .center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

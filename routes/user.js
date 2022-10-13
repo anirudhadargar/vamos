@@ -13,20 +13,32 @@ router.get("/register",function(req,res){
 
 router.post("/register",async(req,res)=>{
     req.session.username=req.body.username;
+    
     try{
         const{username,password,email,contact,uniqueID,address,latitude,longitude}=req.body;
-        console.log(latitude,longitude);
+        // console.log(username,password);
+        console.log("here1",req.body);
         const user=await new User({username,email,contact,uniqueID,address,latitude,longitude});
         const UserAuth=await User.register(user,password)
+      //  console.log(UserAuth);
+        console.log("here2",req.body);
         req.login(UserAuth,err=>{
             if(err) return next(err);
             req.flash('success',`Hello, ${username} Nice to See You`)
             if(req.body.hasOwnProperty("donor")){
                 req.session.username=req.body.username;
+                console.log(req.body);
                 res.render("dashboard",{name:req.body.username});
             }
             else{
-                res.redirect('/home')
+                req.logout(function(err){
+                    if(err){
+                        return next(err);
+                    }
+                    else{
+                        res.redirect("/login");
+                    }
+                })
             }
         })
 

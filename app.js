@@ -70,6 +70,10 @@ app.get("/home",function(req,res){
     res.render("home");
 });
 
+app.post("/home",function(req,res){
+    res.redirect("/home");
+});
+
 app.get("/form",function(req,res){
     res.render('form')
 });
@@ -81,15 +85,14 @@ app.post("/formPost",function(req,res){
         if(err){
             console.log(err);
         }
-        else{
+        else if(info){
             var newArray=[];
             var newList=[];
-            var coordinates=[];                    
+            var coordinates=[];                  
             if(Boolean(req.body.status)){
                 console.log("start");
                 var lat1,lat2,lon1,lon2;
-                var newArray=[];
-                var newList=[];
+                
                 User.findOne({username:req.session.username},function(err,hospital){
                     if(err){
                         console.log(hospital);
@@ -161,6 +164,36 @@ app.post("/formPost",function(req,res){
                 // {listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates}
             }
             else{
+                //
+                User.findOne({username:req.session.username},function(err,hospital){
+                    if(err){
+                        console.log(hospital);
+                        console.log(hospital.address);
+                        console.log(err);
+                    }
+                    else{
+                        lat1=hospital.latitude;
+                        lon1=hospital.longitude;
+                        coordinates.push({
+                            "lat":hospital.latitude,
+                            "lng": hospital.longitude,
+                            "info": hospital.username,
+                        });
+                        //console.log(lat1);
+                        //console.log(lon1);
+                    }
+                });
+                for(var i=0;i<info.hospital.length;i++){
+                const doc=await User.findOne({username:info.hospital[i].name});
+                lat2=doc.latitude;
+                lon2=doc.longitude;
+                coordinates.push({
+                    "lat":doc.latitude,
+                    "lng":doc.longitude,
+                    "info":doc.username
+                });                
+                }
+                //
                 info.hospital.sort(function(a,b){
                     if(a.cost==b.cost){
                         return a.cost>b.cost?1:a.cost<b.cost?-1:0;
@@ -175,11 +208,19 @@ app.post("/formPost",function(req,res){
                 });
                 info.save();*/
                 //console.log(info.hospital);
-                res.render("shows",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity});
+                res.render("shows",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates});
             }
         }
+        else{
+            res.render("notAvailable");
+        }
+
     });
 
+});
+
+app.post("/notAvailable",function(req,res){
+    res.redirect("/form");
 });
 
 app.get("/donor",function(req,res){
@@ -400,7 +441,9 @@ const calculateOrderAmount = (items) => {
     });
   });
 
-
+  app.get("/success",function(req,res){
+    res.render("success");
+  });
 
 app.listen(3000,function(){
     console.log("Server started on port 3000.");

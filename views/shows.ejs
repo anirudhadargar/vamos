@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="/css/showpagestyles.css"/>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <title>Vamos</title>
@@ -13,7 +16,7 @@
     <div class="container">
         <%listOfHospitals.forEach(function(hospital){%>
         <form method="post" action="/order">
-        <div class="row">
+        <!-- <div class="row"> -->
             
             <div class="card">
               <div class="cardheader">
@@ -55,7 +58,7 @@
               </div>
             </div>
           </div>
-        </div>
+        <!-- </div> -->
     
    
     </div>
@@ -66,53 +69,60 @@
 
       <div id="map"></div>
     </div>
+    <script>
+
+      mapboxgl.accessToken = 'pk.eyJ1Ijoiam9zZXBoMTQwOSIsImEiOiJjbDk1OG1tZGYwMnRsM29xamFhYWNhcGd1In0.512h7J7hi5LOqcThdHg8zQ';
+      
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [77.5946,12.9716],
+        zoom: 7
+      });
+      
+      const geojson = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [77.5946,12.9716]
+            },
+            properties: {
+              title: 'Mapbox',
+              description: 'Washington, D.C.'
+            }
+          }
+          
+        ]
+      };
+      for(var i=0;i<hospitalCoordinates.length;i++){
+        features.push(
+          type:'Feature',
+          geometry:{
+            type:'Point',
+            coordinates:[77.5941,12.9712]
+            // coordinates:[hospitalCoordinates[i].lng,hospitalCoordinates[i].lat]
+          },
+          properties:{
+            title:'Mapbox',
+            description:"yes"
+          }
+        );
+      }
+      // geojason
+      
+      // code from the next step will go here!
+      for (const feature of geojson.features) {
+        // create a HTML element for each feature
+        const el = document.createElement('div');
+        el.className = 'marker';
+      
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+      }
+      </script>
   </body>
 </html>
 
-
-    
-      
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1qB06FA_Q_XSiZgFFnBMRRf2Ze31igSo&callback=initMap&v=weekly"async></script>
-<!-- <script src="./display.js"></script> -->
-<script>
-    let map;
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat:28.323, lng: 83.344 },
-    zoom: 8,
-  });
-}
-    </script>
-     <script>
-  
-    
-    // var markers=JSON.parse('<%-JSON.stringify(hospitalCoordinates)%>');
-
-
-    const markers =[
-    {lat:28.323,lng:83.344,info:"first marker"}
-
-]
-console.log("working1");
-markers.forEach(m=>{
-  const marker = new google.maps.Marker({
-  
-    position:{lat:m.lat,lng:m.lng},
-    
-  })
-  console.log("working2");
-    const popupContent = new google.maps.InfoWindow()
-google .maps.event.addListener(marker,'click',(function(marker){
-    return function(){
-         popupContent.setContent(m.info)
-         popupContent.open(map,marker)
-    }
-})(marker)
-)
-console.log("working");
-marker.setMap(map);
-})
-
-
-    </script>
