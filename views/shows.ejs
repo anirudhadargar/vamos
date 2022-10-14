@@ -41,10 +41,16 @@
                 </div>
                 <%if(hospital.distance){%>
                     <div class="one">
-                      <label for="">Distance :</label>
+                      <label for="">Distance (km) :</label>
                         <input type="text" name="distance" value="<%= hospital.distance %>" >
                         </div>
                 <%}%>
+                <%if(hospital.rating){%>
+                <div class="one">
+                  <label for="">Hospital Rating :</label>
+                    <input type="text" name="rating" value="<%=hospital.rating %>" placeholder=<%=hospital.rating%>>
+                    </div>
+                  <%}%> 
                 <div class="one">
                   <label for="">Quantity Required :</label>
                     <input type="text" name="equipmentrequired" value="<%=quantity %>" >

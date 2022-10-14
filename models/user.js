@@ -9,9 +9,14 @@ const UserSchema=new Schema({
     email:String,
     cityName:String,
     latitude:Number,
-    longitude:Number
+    longitude:Number,
+    rating:Number
 })
 
 UserSchema.plugin(passportLocalMongoose)
 
 module.exports=mongoose.model('User',UserSchema)
+
+/*
+    db.users.updateOne({username:"rit5"},{$set:{rating:3.9}});
+*/

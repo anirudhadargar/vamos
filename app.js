@@ -104,6 +104,9 @@ app.get("/home",function(req,res){
     res.render("home");
 });
 
+app.get("/review",function(req,res){
+    res.render("review");
+});
 //notification
 
 
@@ -114,7 +117,7 @@ app.get("/form",function(req,res){
 });
 
 app.post("/form",function(req,res){
-    res.redirect("/form");
+    res.redirect("/form")
 });
 
 app.post("/formPost",function(req,res){
@@ -128,7 +131,7 @@ app.post("/formPost",function(req,res){
             var newArray=[];
             var newList=[];
             var coordinates=[];                  
-            if(Boolean(req.body.status)){
+            if(Boolean(req.body.status1)){
                 console.log("start");
                 var lat1,lat2,lon1,lon2;
                 
@@ -201,6 +204,97 @@ app.post("/formPost",function(req,res){
 
                 res.render("shows",{listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates,date:req.body.date});
                 // {listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates}
+            }
+            else if(req.body.status2){
+                User.findOne({username:req.session.username},function(err,hospital){
+                    if(err){
+                        console.log(hospital);
+                        console.log(hospital.address);
+                        console.log(err);
+                    }
+                    else{
+                        lat1=hospital.latitude;
+                        lon1=hospital.longitude;
+                        coordinates.push({
+                            "lat":hospital.latitude,
+                            "lng": hospital.longitude,
+                            "info": hospital.username,
+                        });
+                        //console.log(lat1);
+                        //console.log(lon1);
+                    }
+                });
+                for(var i=0;i<info.hospital.length;i++){
+                    const doc=await User.findOne({username:info.hospital[i].name});
+                    lat2=doc.latitude;
+                    lon2=doc.longitude;
+                    coordinates.push({
+                        "lat":doc.latitude,
+                        "lng":doc.longitude,
+                        "info":doc.username
+                    });
+                    newArray.push({
+                        name:info.hospital[i].name,
+                        location:info.hospital[i].location,
+                        cost:info.hospital[i].cost,
+                        quantity: info.hospital[i].quantity,
+                        rating: doc.rating
+                    })                
+                }
+                newArray.sort(function(a,b){
+                    if(a.rating==b.rating){
+                        return a.rating<b.rating?1:a.rating>b.rating?-1:0;
+                    }
+                    return a.rating<b.rating?1:-1;
+                });
+
+                res.render("shows",{listOfHospitals:newArray,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates,date:req.body.date});
+            }
+            else if(req.body.status3){
+                User.findOne({username:req.session.username},function(err,hospital){
+                    if(err){
+                        console.log(hospital);
+                        console.log(hospital.address);
+                        console.log(err);
+                    }
+                    else{
+                        lat1=hospital.latitude;
+                        lon1=hospital.longitude;
+                        coordinates.push({
+                            "lat":hospital.latitude,
+                            "lng": hospital.longitude,
+                            "info": hospital.username,
+                        });
+                        //console.log(lat1);
+                        //console.log(lon1);
+                    }
+                });
+                for(var i=0;i<info.hospital.length;i++){
+                const doc=await User.findOne({username:info.hospital[i].name});
+                lat2=doc.latitude;
+                lon2=doc.longitude;
+                coordinates.push({
+                    "lat":doc.latitude,
+                    "lng":doc.longitude,
+                    "info":doc.username
+                });                
+                }
+                //
+                info.hospital.sort(function(a,b){
+                    if(a.quantity==b.quantity){
+                        return a.quantity<b.quantity?1:a.quantity>b.quantity?-1:0;
+                    }
+                    return a.quantity<b.quantity?1:-1;
+                });
+
+                /*info.hospital.push({
+                    name: "Appolo",
+                    location: "Banglore",
+                    cost: 2000
+                });
+                info.save();*/
+                //console.log(info.hospital);
+                res.render("shows",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates,date:req.body.date});
             }
             else{
                 //
@@ -338,10 +432,14 @@ app.post("/order",function(req,res){
                     hospitalName:req.body.hospitalName,
                     dueDate:newDate
                 }]
-            })
+            },function(err,doc){
+                if(err){
+                    console.log(err);
+                }
+            });
         }
     })
-    pastOrders.findOne({name:req.session.username},function(err,doc){
+   pastOrders.findOne({name:req.session.username},function(err,doc){
         if(err){
             console.log(err);
         }
@@ -359,7 +457,7 @@ app.post("/order",function(req,res){
             })
         }
         else{
-            doc.create({
+            pastOrders.create({
                 name:req.session.username,
                 transactions:[{
                     hospitalName:req.body.hospitalName,
@@ -367,6 +465,10 @@ app.post("/order",function(req,res){
                     equipmentPurchased:req.body.equipmentrequired,
                     equipmentCost:req.body.equipmentCost,
                 }]
+            },function(err,doc1){
+                if(err){
+                    console.log(err);
+                }
             })
         }
     });
