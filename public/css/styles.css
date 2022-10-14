@@ -625,3 +625,16 @@ textarea{
 .contactright h1{
   font-size: 3rem;
 }
+.zz{
+  position: absolute;
+  top:10rem;
+  left: 12rem;
+  z-index: 10000;
+}
+.zz li {
+padding: 1rem;
+border-style: solid;
+background-color: white;
+color: black;
+
+}

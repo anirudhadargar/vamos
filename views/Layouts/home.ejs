@@ -21,6 +21,7 @@
     <title>Document</title>
 </head>
 
+
 <body>
 
 
@@ -119,22 +120,37 @@
     <div class="rental">
         <!-- <li id="homeimage2"><img src="/assets/images/h2.webp" alt=""></li> -->
 
-
         <div class="search">
-
-            <input type="text" placeholder=" Search Equipments" name="search">
-
-
-            <!-- <img id="searchimage" src="./images/search-1.png" alt=""> -->
-
-            <button type="submit" class="search-button">
+            <input type="text"
+                placeholder=" Search Courses"
+                name="search" onkeyup="searchequip()" id="CR7">
+               <!-- <img id="searchimage" src="./images/search-1.png" alt=""> -->
+               <button type="submit" class="search-button">
                 <i class="fas fa-search"></i></button>
-            </button>
-        </div>
+              </button>
+              <ul class="zz" id="myUl">
+                <li><a href="/subproducts/monitorin-1.html">GE Dinamap</a></li>
+                <li><a href="/subproducts/monitorin-2.html">Cardio Tech SE 12000 Express ECG</a></li>
+                <li><a href="/subproducts/monitorin-3.html">Philips Intellivue MX400 </a></li>
+                <li><a href="/subproducts/monitorin-4.html">Radiometer TCM ComnbiM Monitor</a></li>
+                <li><a href="/subproducts/support-1.html">Drive Medical STD30ECDDA Bariatic Wheelchair</a></li>
+                <li><a href="/subproducts/support-3.html">Hillrom BErsaCare Med-Surg Bed</a></li>
+                <li><a href="/subproducts/support-4.html">Med-Mizer AllCare</a></li>
+                <li><a href="/subproducts/support-2.html">Dirive Medical 10220HD Patient Monitor</a></li>
+                <li><a href="/subproducts/oximeter-1.html">Smiths Medical Spectro2 10 Pulse Oximeter</a></li>
+                <li><a href="/subproducts/oximeter-2.html">Nellcor N-85 Pulse Oximeter</a></li>
+                <li><a href="/subproducts/oximeter-3.html">Masimo RAD-97 Pulse Oximeter</a></li>
+                <li><a href="/subproducts/oximeter-4.html">Masimo Rad 7 Oximeter</a></li>
+                <li><a href="/subproducts/ivtube-1.html">Alaris 4900-0000 Secondary Set 8100 Pump Module Set</a></li>
+                <li><a href="/subproducts/ivtube-3.html">Alaris 2477-0007 Blood Set 8100 Pump Module Set</a></li>
+                <li><a href="/subproducts/ivtube-4.html">Alaris 2420-0500 Primary Admin Set 8100 Pump Module Set</a></li>
+                <li><a href="/subproducts/ivtube-2.html">CareFusion 28304E Full Set MedSystem III Full Set</a></li>
+            </ul>
+    </div>
         <div class="productstype">
 
             <dvi class="row">
-                <a href="/products/monitoring.html" class="one">
+                <a href="/product/monitoring.html" class="one">
                     <div class="cardheader">
 
                         <img src="/assets/images/rental-pg1-1.jpeg" alt="">
@@ -145,7 +161,7 @@
                     </div>
                 </a>
 
-                <a href="/products/oximeter.html" class="one">
+                <a href="/product/oximeter.html" class="one">
                     <div class="cardheader">
 
                         <img src="/assets/images/rental-pg1-3.jpeg" alt="">
@@ -155,7 +171,7 @@
                         <div class="text">Oximeter</div>
                     </div>
                 </a>
-                <a href="/products/support.html" class="one">
+                <a href="/product/support.html" class="one">
                     <div class="cardheader">
 
                         <img src="/assets/images/rental-pg1-2.jpeg" alt="">
@@ -165,7 +181,7 @@
                         <div class="text">Support surfaces</div>
                     </div>
                 </a>
-                <a href="/products/ivtube.html" class="one">
+                <a href="/product/ivtube.html" class="one">
                     <div class="cardheader">
 
                         <img src="/assets/images/rental-pg1-4.jpeg" alt="">
@@ -260,6 +276,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
+<script>
+let ul=document.getElementById('myUl');
+        ul.style.display='none';
+    const searchequip=()=>{
+        let filter=document.getElementById('CR7').value.toUpperCase();
+        let li=ul.getElementsByTagName('li')
+        console.log(li)
+        var j=0;
+        for(var i=0;i<li.length;i++){
+            let a=li[i].getElementsByTagName('a')[0];
+            let textValue=a.textContent||a.innerHTML;
+            if(textValue.toUpperCase().indexOf(filter)>-1 && j<5){
+                ul.style.display='';
+                li[i].style.display='';
+                j++;
+            }else{
+                li[i].style.display='none';
+            }
+        }
+        if(filter.length==""){
+            let ul=document.getElementById('myUl');
+        ul.style.display='none';
+        }
+    }
+</script>
 
 </body>
 

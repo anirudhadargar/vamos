@@ -62,22 +62,22 @@
             <label for=""><b>Password</b></label>
             <input class="form-control-sm form-control" id="" name="password" placeholder="*******" type="password" />
           </div> -->
-
+          <div data-name="check">
           <div class="input-group">
             <div class="input-group-text">
-              <input class="form-check-input mt-0 checkbox" type="checkbox" value=false aria-label="Checkbox for following text input" name="status1">
+              <input class="form-check-input mt-0 checkbox" id="check" type="checkbox" value=false aria-label="Checkbox for following text input" name="status1" onClick="onlyOne(this)">
               <label for="status1"><b>Emergency</b></label>
             </div>
           </div>
           <div class="input-group">
             <div class="input-group-text">
-              <input class="form-check-input mt-0 checkbox" type="checkbox" value=false aria-label="Checkbox for following text input" name="status2">
+              <input class="form-check-input mt-0 checkbox" id="check" type="checkbox" value=false aria-label="Checkbox for following text input" name="status2" onClick="onlyOne(this)">
               <label for="status2"><b>Rating</b></label>
             </div>
           </div>
           <div class="input-group">
             <div class="input-group-text">
-              <input class="form-check-input mt-0 checkbox" type="checkbox" value=false aria-label="Checkbox for following text input" name="status3">
+              <input class="form-check-input mt-0 checkbox" id="check" type="checkbox" value=false aria-label="Checkbox for following text input" name="status3" onClick="onlyOne(this)">
               <label for="status3"><b>No.of Equipments</b></label>
             </div>
           </div>
@@ -85,11 +85,29 @@
             <button type="submit" class="btn btn-primary">Back</button>
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
+        </div>
         </form>
       </div>
     </div>
   </div>
 
-</body>
+<script>
+  var group_=(el,callback)=>{
+  el.forEach((checkbox)=>{
+  callback(checkbox)
+       })
+  }
+  var group_el=document.querySelectorAll("*[data-name] > input")
+  group_(group_el,(item)=>{
+  item.onclick=(e)=>{
+  group_(group_el,(item)=>{
+  item.checked=false;
+  })
+  
+  e.target.checked=true;
+  }
+  })
+</script>
 
+</body>
 </html>

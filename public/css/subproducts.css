@@ -3,6 +3,19 @@ body{
  background-image: url("/assets/images/backgroundimage.jpeg");
 }
 
+
+:root{
+  --main-bg-color:rgb(247,237,237);
+  --rental-bg-color: rgb(211,234,215);
+  --cardcolour-1:rgb(211,227,197);
+  --white:white;
+  --cardcolour-2:#e4e4e4;
+  --statisticscolor:rgb(211,227,197);
+  --fontcolor:black;
+  --fontcolor2:rgb(115, 104, 104);
+  --shadowcolor:rgb(0, 0, 0);
+}
+
 body{
   display: inline;
 
@@ -21,31 +34,28 @@ font-family: "Poppins", sans-serif;
 /* navbarstart */
 
 .navbar a{
-background-color: rgb(115 166 255);
+  background-color: rgb(255, 185, 185);
   color: rgb(0, 0, 0);
-border: none;
-padding: 15px 32px;
-text-align: center;
-text-decoration: none;
-
-font-size: 22px;
-border-radius: 50%;
+  border: solid;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
 }
+
 header{
 position: fixed;
 top: 0;
 width: 100%;
-background: linear-gradient(rgb(108, 115, 255), rgb(255, 255, 255));
+background: linear-gradient(var(--cardcolour-2), var(--cardcolour-1));
 
 z-index: 100000;
 }
 .navbar{
-
 display: flex;
 justify-content: space-between;
   color: rgb(0, 0, 0);
-
-
+margin: none;
+padding: 0%;
 
 }
 li{
@@ -64,20 +74,22 @@ ul {
 
 border-radius: 50%;
 }
-#favicon:hover{
+#favicon{
 cursor: pointer;
-
+}
+.navright{
+  margin-top: 3px;
 }
 .navright li{
 display: inline-block;
 margin-top: 1em;
-text-shadow: 0 0 20px #6d8cff, 0 0 30px #0060e6;
+/* text-shadow: 0 0 20px #6d8cff, 0 0 30px #0060e6; */
 
   margin-right: 2em;
 }
-#nav li a.active {
-color: #1e1e1e;
-background: white;
+#nav li a {
+color: var(--fontcolor);
+background: var(--main-bg-color);
 }
 .navright li a{
   transition: all 0.1 ease 0s;
@@ -85,7 +97,7 @@ background: white;
 
 .navright li a:hover{
   color: rgb(0, 0, 0);
-  box-shadow: 0px 0px 10px 0 rgba(101, 102, 116, 0.982), 0 0px 10px 0 rgb(0, 0, 0);
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.982), 0 0px 10px 0 rgb(170, 170, 170);
 }
 
 

@@ -47,7 +47,7 @@ button {
 }
 .container{
   position: absolute;
-  top: 10rem;
+  /* top: 1rem; */
   left: 5rem;
 }
 .one{
