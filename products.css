@@ -1,0 +1,173 @@
+
+:root{
+  --main-bg-color:rgb(247,237,237);
+  --rental-bg-color: rgb(211,234,215);
+  --cardcolour-1:rgb(211,227,197);
+  --white:white;
+  --cardcolour-2:#e4e4e4;
+  --statisticscolor:rgb(211,227,197);
+  --fontcolor:black;
+  --fontcolor2:rgb(115, 104, 104);
+  --shadowcolor:rgb(0, 0, 0);
+}
+
+
+body{
+  /* background-image: url(/images/productbackground.jpeg); */
+  background-color: rgb(115 166 255);
+}
+body{
+  display: inline;
+ background-image: url("/assets/images/backgroundimage.jpeg");
+
+z-index: -100;
+scroll-behavior: smooth;
+}
+a{
+text-decoration: none;
+}
+* {
+padding: 0;
+margin: 0;
+scroll-behavior: smooth;
+
+font-family: "Poppins", sans-serif;
+}
+/* navbarstart */
+
+.navbar a{
+  background-color: rgb(255, 185, 185);
+  color: rgb(0, 0, 0);
+  border: solid;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+}
+
+header{
+position: fixed;
+top: 0;
+width: 100%;
+background: linear-gradient(var(--cardcolour-2), var(--cardcolour-1));
+
+z-index: 100000;
+}
+.navbar{
+display: flex;
+justify-content: space-between;
+  color: rgb(0, 0, 0);
+margin: none;
+padding: 0%;
+
+}
+li{
+  list-style-type: none;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.navleft img{
+  margin-left: 1em;
+  float: left;
+  width: 70px;
+  height: 60px;
+
+border-radius: 50%;
+}
+#favicon{
+cursor: pointer;
+}
+.navright{
+  margin-top: 3px;
+}
+.navright li{
+display: inline-block;
+margin-top: 1em;
+/* text-shadow: 0 0 20px #6d8cff, 0 0 30px #0060e6; */
+
+  margin-right: 2em;
+}
+#nav li a {
+color: var(--fontcolor);
+background: var(--main-bg-color);
+}
+.navright li a{
+  transition: all 0.1 ease 0s;
+}
+
+.navright li a:hover{
+  color: rgb(0, 0, 0);
+  box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.982), 0 0px 10px 0 rgb(170, 170, 170);
+}
+/* nav bar end  */
+.heading div{
+  display: inline;
+  position: absolute;
+  top: 5rem;
+}
+.bullet img{
+  position: absolute;
+  width: 6rem;
+height: 7rem;
+margin-top: 2rem;
+top: 1rem;
+left: 4rem;
+
+}
+.heading #title{
+  position: absolute;
+  top: 7.2rem;
+  left: 8rem;
+  font-size: 8rem;
+margin-left: 5rem;
+}
+.productstype{
+  position: absolute;
+display: flex;
+flex-direction: row;
+
+top: 15rem;
+margin: 1rem;
+}
+.productstype .one{
+
+margin: 3rem;
+padding: 2rem;
+width: 12rem;
+height: 17rem ;
+text-decoration:none;
+
+background-image: linear-gradient( rgb(240, 255, 241) , rgb(112 203 171));
+transition: 0.4s;
+box-shadow: 0px 0px 17px 0 rgb(0 0 0 / 98%), 0 10px 50px 0 rgb(0 0 0);
+
+}
+.productstype .one:hover{
+  width: 14rem;
+  height: 19rem;
+  cursor: pointer;
+  box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.982), 0 17px 50px 0 rgb(0, 0, 0);
+
+}
+.productstype .one img{
+  width: 10rem;
+  height: 10rem;
+  transition: 0.4s;
+  margin-left: 1rem;
+}
+.productstype .one:hover img{
+  scale: 1.2;
+  margin-left: 1.8rem;
+
+}
+.productstype .text {
+margin-top: 0.6rem;
+font-size: 1.5rem;
+color: #000000;
+transition: 0.4s;
+}
+.productstype .one:hover .text{
+  margin-top: 1.3rem;
+}
