@@ -7,6 +7,7 @@ const UserSchema=new Schema({
     uniqueID: String,
     contact:Number,
     email:String,
+    cityName:String,
     latitude:Number,
     longitude:Number
 })

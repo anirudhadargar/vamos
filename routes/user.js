@@ -15,10 +15,10 @@ router.post("/register",async(req,res)=>{
     req.session.username=req.body.username;
     
     try{
-        const{username,password,email,contact,uniqueID,address,latitude,longitude}=req.body;
+        const{username,password,email,contact,uniqueID,address,cityName,latitude,longitude}=req.body;
         // console.log(username,password);
         console.log("here1",req.body);
-        const user=await new User({username,email,contact,uniqueID,address,latitude,longitude});
+        const user=await new User({username,email,contact,uniqueID,address,cityName,latitude,longitude});
         const UserAuth=await User.register(user,password)
       //  console.log(UserAuth);
         console.log("here2",req.body);
@@ -27,7 +27,7 @@ router.post("/register",async(req,res)=>{
             req.flash('success',`Hello, ${username} Nice to See You`)
             if(req.body.hasOwnProperty("donor")){
                 req.session.username=req.body.username;
-                console.log(req.body);
+                //console.log(req.body);
                 res.render("dashboard",{name:req.body.username});
             }
             else{
@@ -36,6 +36,7 @@ router.post("/register",async(req,res)=>{
                         return next(err);
                     }
                     else{
+                        req.session.username=req.body.username;
                         res.redirect("/login");
                     }
                 })

@@ -13,4 +13,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-<% } %>  
+<% } %>
+<% if (pending) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Oops! Something Went Wrong</strong> <%= pending %> 
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+<% } %>

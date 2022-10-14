@@ -1,231 +1,265 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="/css/styles.css">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-  />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
+
+
     <!-- nav bar start -->
     <header>
 
-        <div  class="navbar">
-            
-            
-                <li class="navleft"><img id="favicon" src="/assets/images/favicon.jpeg" alt="Italian Trulli"></li>
-                <ul id="nav" class="navright" >
-    
-                    <li ><a href="#home">Home</a></li>
-                    <li id="sta" ><a href="#statistics">Statistics</a></li>
-                    <li  ><a href="#rental">Rental</a></li>
-                    <li ><a href="#contact">Contact</a></li>
-                    <% if(login){%>
-                        <li><a href="/logout">Logout</a></li>
+        <div class="navbar">
+
+
+            <li class="navleft"><img id="favicon" src="/assets/images/favicon.jpeg" alt="Italian Trulli"></li>
+            <ul id="nav" class="navright">
+
+                <li><a href="#home">Home <i class="fa-solid fa-house"></i></a></li>
+                <li><a href="#statistics">Statistics <i class="fa-solid fa-list-ol"></i></a></li>
+                <li><a href="#rental">Rental <i class="fa-solid fa-cart-plus"></i></a></li>
+                <li><a href="#contact">Contact <i class="fa-solid fa-phone"></i></a></li>
+                <li><a href="/alert">Alert</a></li>
+                <li><a href="/pastOrders">Past Orders </a></li>
+                <% if(login){%>
+                    <li><a href="/logout">Logout <i class="fa-solid fa-right-from-bracket"></i></a></li>
                     <%}else{%>
-                        <li><a href="/login">Login</a></li>
-                        <li><a href="/register">Register</a></li>
-                    <%}%>
-                </ul>
-              
-              
+                        <li><a href="/login">Login <i class="fa-solid fa-user"></i></a></li>
+                        <li><a href="/register">Register <i class="fa-solid fa-user-plus"></i></a></li>
+                        <%}%>
+            </ul>
+
+
         </div>
     </header>
 
-   <!-- navbar end -->
-   <!-- homestart -->
-<a name = "home"></a>
-<div class="home">
-    <ul >
-
-        <li id="homeimage1"><img src="/assets/images/image-home-3.jpeg" alt=""></li>
-
-    </ul>
-    <div>
-        
+    <div class="bgimg">
+        <ul>
+            <li><img src="/assets/images/backgroundimage.jpeg" alt=""></li>
+        </ul>
     </div>
-    <li id="homeimage2"><img src="/assets/images/image-home-2.jpeg" alt=""></li>
-    <li id="hometext-1">
-        Get equipments right away at minimum cost</li>
-    <button id="explore"><a href="#rental">Explore</a></button>
-    <li id="hometext-2">
-        <!-- <h2 class="glow">He who has health, has hope; and he who has hope, has everything.</h2> -->
 
-    </li>
+    <!-- navbar end -->
 
-</div>
-<!-- homeend -->
-<a name = "statistics"></a>
-<!-- statistic sstart -->
-<div id="statis" class="statistics">
-    <div class="wrapper">
-        <div class="container">
-          <i class="fa-solid fa-truck-medical"></i>
-          <span class="num" data-val="100">000</span>
-          <span class="text"> Delivered</span>
+
+    <!-- homestart -->
+    <a name="home"></a>
+    <div class="homecontainer">
+        <div class="home">
+            <ul>
+                <li id="homeimage1"><img src="/assets/images/image-home-3.jpeg" alt=""></li>
+            </ul>
+            <div>
+
+            </div>
+            <!-- <li id="homeimage2"><img src="/assets/images/h2.webp" alt=""></li> -->
+            <li id="hometext-1">
+                "Get equipments right away at minimum cost and we are with you in every need"</li>
+            <button id="explore"><a href="#rental">Explore</a></button>
+            <li id="hometext-2">
+                <!-- <h2 class="glow">He who has health, has hope; and he who has hope, has everything.</h2> -->
+            </li>
         </div>
-  
-        <div class="container">
-          <i class="fas fa-smile-beam"></i>
-          <span class="num" data-val="150">000</span>
-          <span class="text">Happy Customers</span>
+    </div>
+    <!-- homeend -->
+
+    <a name="statistics"></a>
+    <!-- statistic sstart -->
+    <div id="statis" class="statistics">
+        <li id="homeimage2"><img src="/assets/images/h2.webp" alt=""></li>
+        <div class="wrapper">
+            <div class="container">
+                <i class="fa-solid fa-truck-medical"></i>
+                <span class="num" data-val="100">000</span>
+                <span class="text"> Delivered</span>
+            </div>
+
+            <div class="container">
+                <i class="fas fa-smile-beam"></i>
+                <span class="num" data-val="150">000</span>
+                <span class="text">Happy Customers</span>
+            </div>
+
+            <div class="container">
+                <i class="fa-solid fa-suitcase-medical"></i>
+                <span class="num" data-val="225">000</span>
+                <span class="text">Equipments</span>
+            </div>
+
+            <div class="container">
+                <i class="fas fa-star"></i>
+                <span class="num" data-val="280">000</span>
+                <span class="text">Five Stars</span>
+            </div>
         </div>
-  
-        <div class="container">
-          <i class="fa-solid fa-suitcase-medical"></i>
-          <span class="num" data-val="225">000</span>
-          <span class="text">Equipments</span>
-        </div>
-  
-        <div class="container">
-          <i class="fas fa-star"></i>
-          <span class="num" data-val="280">000</span>
-          <span class="text">Five Stars</span>
-        </div>
-      </div>
-</div>
+    </div>
+    <!-- statistics end -->
 
-<!-- statistics end -->
-<a name = "rental"></a>
-<!-- rentalstart -->
-<div class="rental">
-  
-       
-       <div class="search">
+    <a name="rental"></a>
+    <!-- rentalstart -->
+    <div class="rental">
+        <!-- <li id="homeimage2"><img src="/assets/images/h2.webp" alt=""></li> -->
 
-            <input type="text"
-                placeholder=" Search Courses"
-                name="search">
-                
 
-               <!-- <img id="searchimage" src="./images/search-1.png" alt=""> -->
+        <div class="search">
 
-               <button type="submit" class="search-button">
+            <input type="text" placeholder=" Search Equipments" name="search">
+
+
+            <!-- <img id="searchimage" src="./images/search-1.png" alt=""> -->
+
+            <button type="submit" class="search-button">
                 <i class="fas fa-search"></i></button>
-              </button>
-    </div>
-    <div class="productstype">
-    <div class="row">
-        <a href="/products/monitoring.html" class="one">
-            <div class="cardheader">
-
-                <img src="/assets/images/rental-pg1-1.jpeg" alt="">
-            </div>
-            <div class="cardbody">
-
-                <div class="text">Monitoring</div>
-            </div>
-        </a>
-
-        <a href="/products/.html" class="one">
-            <div class="cardheader">
-
-                <img src="/assets/images/rental-pg1-1.jpeg" alt="">
-            </div>
-            <div class="cardbody">
-
-                <div class="text">Oximeter</div>
-            </div>
-        </a>
-        <a href="/products/oximeter.html" class="one">
-            <div class="cardheader">
-
-                <img src="/assets/images/rental-pg1-1.jpeg" alt="">
-            </div>
-            <div class="cardbody">
-
-                <div class="text">Monitoring</div>
-            </div>
-        </a>
-        <a href="/products/monitoring.html" class="one">
-            <div class="cardheader">
-
-                <img src="/assets/images/rental-pg1-1.jpeg" alt="">
-            </div>
-            <div class="cardbody">
-                <div class="text">Monitoring</div>
-            </div>
-        </a>
-    </div>
-    </div>
-</div>
-
-<!-- rentalend -->
-<a name = "contact"></a>
-<!-- contactstart -->
-<div class="contact">
-
-    <div class="box-1">
-        <div id="text-1">
-            Get in Touch
+            </button>
         </div>
-        <div class="one">
-            <img src="/assets/images/contact-left-1.png" alt="">
-            <div id="text">abcdzyx3456@gmail.com</div>
-        </div>
-        <div class="one">
-            <img src="/assets/images/contact-left-2.png" alt="">
-            <div id="text">8884301577</div>
-        </div>
-        <div id="social">
-           <a href="https://twitter.com/i/flow/login"><img src="/assets/images/contact-left-3.png" alt=""></a> 
-           <a href="https://www.instagram.com/"><img src="/assets/images/contact-left-4.png" alt=""></a> 
-           <a href="https://m.facebook.com/"><img src="/assets/images/contact-left-5.png" alt=""></a> 
+        <div class="productstype">
 
-            
-            
+            <dvi class="row">
+                <a href="/products/monitoring.html" class="one">
+                    <div class="cardheader">
+
+                        <img src="/assets/images/rental-pg1-1.jpeg" alt="">
+                    </div>
+                    <div class="cardbody">
+
+                        <div class="text">Monitoring</div>
+                    </div>
+                </a>
+
+                <a href="/products/oximeter.html" class="one">
+                    <div class="cardheader">
+
+                        <img src="/assets/images/rental-pg1-3.jpeg" alt="">
+                    </div>
+                    <div class="cardbody">
+
+                        <div class="text">Oximeter</div>
+                    </div>
+                </a>
+                <a href="/products/support.html" class="one">
+                    <div class="cardheader">
+
+                        <img src="/assets/images/rental-pg1-2.jpeg" alt="">
+                    </div>
+                    <div class="cardbody">
+
+                        <div class="text">Support surfaces</div>
+                    </div>
+                </a>
+                <a href="/products/ivtube.html" class="one">
+                    <div class="cardheader">
+
+                        <img src="/assets/images/rental-pg1-4.jpeg" alt="">
+                    </div>
+                    <div class="cardbody">
+
+                        <div class="text">IV Tubing</div>
+                    </div>
+                </a>
+            </dvi>
         </div>
+
 
     </div>
-    <div class="box-2">
-        <div id="quote">
 
-            If you are here it means you want to start
-            a journey.We would love to get to know 
-            you and take you on that journey. We’ll be
-            perfect for each other-you’ll see...</div>
+    <!-- rentalend -->
+    <a name="contact"></a>
+    <!-- contactstart -->
+    <div class="contact">
+        <!-- <li id="homeimage2"><img src="/assets/images/h2.webp" alt=""></li> -->
+
+        <div class="box-1">
+            <div id="text-1">
+                Get in Touch
+            </div>
+            <div class="one">
+                <img src="/assets/images/contact-left-1.png" alt="">
+                <div id="text">abcdzyx3456@gmail.com</div>
+            </div>
+            <div class="one">
+                <img src="/assets/images/contact-left-2.png" alt="">
+                <div id="text">8884301577</div>
+            </div>
+            <div id="social">
+                <a href="https://twitter.com/i/flow/login"><img src="/assets/images/contact-left-3.png" alt=""></a>
+                <a href="https://www.instagram.com/"><img src="/assets/images/contact-left-4.png" alt=""></a>
+                <a href="https://m.facebook.com/"><img src="/assets/images/contact-left-5.png" alt=""></a>
+
+
+
+            </div>
+
         </div>
-    <div class="box-3"><img src="/assets/images/contact-call-right.png" alt=""></div>
-    <div class="box-4"><img src="/assets/images/contact-mail-right.png" alt=""></div>
-    <div class="box-5"><img src="/assets/images/contact-at-right.png" alt=""></div>
-</div>
-<a href="./form.html">form</a>
-<!--<a href="/subproducts/monitoring-1.html">subproducts</a>-->
-<!-- contactend -->
-<script src="/js/frontend.js"></script>
-<script>
-      var favicon = document.getElementById("favicon");
-  favicon.onclick = function(){
-    document.body.classList.toggle("darktheme");
-    // console.log("woeking")
-  }
-</script>
 
+        <!-- <div class="queryform">
+            <form action="post">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="name" placeholder="Your Name...">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" placeholder="abc@gmail.com">
+                <label for="phone">Phone number</label>
+                <input type="text" id="phone" name="phone" placeholder="">
+                <label for="subject">Subject</label>
+                <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+                <input type="submit" value="Submit">
+            </form>
+        </div> -->
+        <div class="contactright">
+            <h1>CONTACT US</h1>
+            <form action="#" >
+                <ul>
+                 
+                     <li id="contactus"><input type="text" placeholder="First name*"></li>
+                     <li id="contactus"><input type="text" placeholder="Last name*"></li>
 
-<script>
-         // var feature=[];
-    
-      // for(var i=0;i<hospitalCoordinates.length;i++){
-      //   feature.push({
-      //     type:'Feature',
-      //     geometry:{
-      //       type:'Point',
-      //       coordinates:[77.5946,12.9716]
-      //       // coordinates:[hospitalCoordinates[i].lng,hospitalCoordinates[i].lat]
-      //     },
-      //     properties:{
-      //       title:'Mapbox',
-      //       description:hospitalCoordinates[i].info
-      //     }
-      //   });
-      // }
-      // console.log(feature);
-</script>
+                     <li id="contactus"><input type="text" placeholder="Email*"></li>
+
+                     <li id="contactus"><input type="text" placeholder="Phone no*"></li>
+                     <li><textarea id="contactus-l" name="paragraph_text" cols="50" rows="10" placeholder="Type your text here*"></textarea></li>
+                     <li>
+
+                         <button>Submit</button>
+                     </li>
+                </ul>
+                 
+            </form>
+
+        </div>
+
+    </div>
+
+    <!--<a href="/subproducts/monitoring-1.html">subproducts</a>-->
+    <!-- contactend -->
+    <script src="/js/frontend.js"></script>
+    <script>
+        var favicon = document.getElementById("favicon");
+        favicon.onclick = function () {
+            document.body.classList.toggle("darktheme");
+            // console.log("woeking")
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>

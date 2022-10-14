@@ -18,6 +18,10 @@ const path=require("path");
 const request=require("./models/equipmentOrder");
 const haversine = require("haversine-distance");
 const stripe = require('stripe')('sk_test_51LoWOgSA0dw3ZeMMl9VJ55DMbyMI1XU9XQbN3gUjDVTYw1HwSj72az1AZIT9cZxcc3IXeOilDQcGv5fC0aCIfB1100gatFdKpu');
+const alerts=require("./models/alert");
+const moment=require("moment");
+const notifier = require('node-notifier');
+const pastOrders=require("./models/pastOrders");
 
 const app=express();
 
@@ -59,23 +63,58 @@ app.use((req,res,next)=>{
     res.locals.login = req.isAuthenticated();
     res.locals.success=req.flash('success')
     res.locals.error=req.flash('error')
+    res.locals.pending=req.flash('pending')
     next();
 })
 
 //routes to handle
 app.use('/',UserRoutes)
 
-app.get("/home",function(req,res){
-    //console.log(req.session.username);
-    res.render("home");
-});
-
 app.post("/home",function(req,res){
     res.redirect("/home");
 });
+app.get("/home",function(req,res){
+    //console.log(req.session.username);
+    if(req.isAuthenticated()){
+        let today=new Date().toISOString().slice(0,10);
+        let year=parseInt(today.slice(0,4));
+        let month=parseInt(today.slice(5,7));
+        let day=parseInt(today.slice(8,10));
+        alerts.findOne({receiverName:req.session.username},function(err,doc){
+            if(err){
+                console.log(err);
+            }
+            else if(doc){
+                for(var i=0;i<doc.allAlerts.length;i++){
+                    var newyear=parseInt(doc.allAlerts[i].dueDate.slice(0,4));
+                    var newmonth=parseInt(doc.allAlerts[i].dueDate.slice(5,7));
+                    var newday=parseInt(doc.allAlerts[i].dueDate.slice(8,10));
+                    const diff=(newyear-year)*365+(newmonth-month)*31+(newday-day);
+                    if(diff<=7){
+                        // req.flash('pending','hi your order is pending')
+                        // 
+                        //alert("Less than " + diff +" days left to return "+doc.allAlerts[i].equipmentName+" to "+doc.allAlerts[i].hospitalName);
+                        
+                        // res.render('notification',{user:diff})
+                    }
+                }
+            }
+        });
+    }
+    res.render("home");
+});
+
+//notification
+
+
+//notification
 
 app.get("/form",function(req,res){
     res.render('form')
+});
+
+app.post("/form",function(req,res){
+    res.redirect("/form");
 });
 
 app.post("/formPost",function(req,res){
@@ -160,7 +199,7 @@ app.post("/formPost",function(req,res){
                 console.log(newList);
                 console.log("working");
 
-                res.render("shows",{listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates});
+                res.render("shows",{listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates,date:req.body.date});
                 // {listOfHospitals:newList,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates}
             }
             else{
@@ -208,7 +247,7 @@ app.post("/formPost",function(req,res){
                 });
                 info.save();*/
                 //console.log(info.hospital);
-                res.render("shows",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates});
+                res.render("shows",{listOfHospitals:info.hospital,nameOfEquipment:info.name,quantity:req.body.quantity,hospitalCoordinates:coordinates,date:req.body.date});
             }
         }
         else{
@@ -237,6 +276,9 @@ app.get("/donor",function(req,res){
         }
     })
 });
+app.post("/donor",function(req,res){
+    res.redirect("/donor");
+})
 
 app.post("/order",function(req,res){
     request.findOne({name:req.body.hospitalName},function(err,hospital){
@@ -270,6 +312,65 @@ app.post("/order",function(req,res){
             //request.save();
         }
     });
+    alerts.findOne({receiverName:req.session.username},function(err,doc){
+        if(err){
+            console.log(err);
+        }
+        else if(doc){
+            const newDate=moment(req.body.date).format("YYYY-MM-DD")
+            doc.allAlerts.push({
+                equipmentName:req.body.equipmentName,
+                hospitalName:req.body.hospitalName,
+                dueDate:newDate
+            })
+            doc.save(function(err){
+                if(err){
+                    console.log(err);
+                } 
+            });
+        }
+        else{
+            const newDate=moment(req.body.date).format("YYYY-MM-DD");
+            alerts.create({
+                receiverName:req.session.username,
+                allAlerts:[{
+                    equipmentName:req.body.equipmentName,
+                    hospitalName:req.body.hospitalName,
+                    dueDate:newDate
+                }]
+            })
+        }
+    })
+    pastOrders.findOne({name:req.session.username},function(err,doc){
+        if(err){
+            console.log(err);
+        }
+        else if(doc){
+            doc.transactions.push({
+                hospitalName:req.body.hospitalName,
+                equipmentName:req.body.equipmentName,
+                equipmentPurchased:req.body.equipmentrequired,
+                equipmentCost:req.body.equipmentCost
+            })
+            doc.save(function(err){
+                if(err){
+                    console.log(err);
+                }
+            })
+        }
+        else{
+            doc.create({
+                name:req.session.username,
+                transactions:[{
+                    hospitalName:req.body.hospitalName,
+                    equipmentName:req.body.equipmentName,
+                    equipmentPurchased:req.body.equipmentrequired,
+                    equipmentCost:req.body.equipmentCost,
+                }]
+            })
+        }
+    });
+
     const totalCost=req.body.equipmentCost*req.body.equipmentrequired;
     res.render("paymentDetails",{hospitalName:req.body.hospitalName,equipmentName:req.body.equipmentName,equipmentCost:req.body.equipmentCost,equipmentrequired:req.body.equipmentrequired,totalCost:totalCost});
 
@@ -350,9 +451,47 @@ app.post("/dashboard",function(req,res){
     else if(req.body.hasOwnProperty("update")){
         res.redirect("/donor");
     }
+    else if(req.body.hasOwnProperty("alert")){
+        res.redirect("/alert");
+    }
     else{
         res.redirect("/home");
     }
+});
+
+app.get("/alert",function(req,res){
+    const empty=[];
+    alerts.findOne({receiverName:req.session.username},function(err,doc){
+        if(err){
+            console.log(err);
+        }
+        else if(doc){
+            res.render("alert",{allAlerts:doc.allAlerts});
+        }
+        else{
+            res.render("alert",{allAlerts:empty});
+        }
+    });
+});
+
+app.post("/alert",function(req,res){
+    const equipmentName=req.body.checkbox;
+    var newOrders;
+    alerts.findOne({receiverName:req.session.username},function(err,hospital){
+        if(err){
+            console.log(err);
+        }
+        else{
+
+            newOrders=hospital.allAlerts.filter((item)=>item.equipmentName!=equipmentName);
+            hospital.allAlerts=newOrders;
+            hospital.save(function(err){
+                if(!err){
+                    res.redirect("/alert");
+                }
+            });
+        }
+    });
 });
 
 app.get("/pendingReq",function(req,res){
@@ -372,6 +511,10 @@ app.get("/pendingReq",function(req,res){
         }
     });
 });
+
+app.post("/pendingReq",function(req,res){
+    res.redirect("/pendingReq");
+})
 
 app.post("/deleteOrder",function(req,res){
     const hospitalName=req.body.checkbox;
@@ -441,6 +584,22 @@ const calculateOrderAmount = (items) => {
     });
   });
 
+app.get("/pastOrders",function(req,res){
+    var empty=[];
+    pastOrders.findOne({name:req.session.username},function(err,doc){
+        if(err){
+            console.log(err);
+        }
+        else if(doc){
+            res.render("pastOrders",{transactions:doc.transactions});
+        }
+        else{
+            res.render("pastOrders",{transactions:empty});
+        }
+    });
+});
+
+
   app.get("/success",function(req,res){
     res.render("success");
   });
@@ -448,6 +607,7 @@ const calculateOrderAmount = (items) => {
 app.listen(3000,function(){
     console.log("Server started on port 3000.");
 });
+
 
 
 

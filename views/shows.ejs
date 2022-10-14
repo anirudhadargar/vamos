@@ -53,6 +53,10 @@
                 <label for="">Quantity Available :</label>
                 <input type="text" name="equipmentQuantity" value="<%= hospital.quantity %>" >
                 </div>
+                <div class="one">
+                  <label for="">Due Date:</label>
+                  <input type="date" name="date" value="<%=date %>" placeholder="<%=date%>">
+                  </div>
               <div class="exbutton">
               <button type="submit" class="btn btn-primary">Select</button>
               </div>
@@ -98,7 +102,7 @@
         ]
       };
       for(var i=0;i<hospitalCoordinates.length;i++){
-        features.push(
+        features.push({
           type:'Feature',
           geometry:{
             type:'Point',
@@ -109,7 +113,7 @@
             title:'Mapbox',
             description:"yes"
           }
-        );
+        });
       }
       // geojason
       
